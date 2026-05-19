@@ -633,14 +633,8 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                     2. Creador Grounding
                                 </button>
                                 <button 
-                                    onClick={() => {
-                                        if (!generatedPersona) {
-                                            triggerToast("Carga un preset o rellena los datos del creador primero.");
-                                            return;
-                                        }
-                                        setActiveTab('mapa');
-                                    }}
-                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${!generatedPersona ? 'opacity-40 cursor-not-allowed' : activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    onClick={() => setActiveTab('mapa')}
+                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
                                 >
                                     <Brain className="h-3 w-3 shrink-0" />
                                     3. Visualizador
