@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metodólogo Científico de Buyer Persona</title>
+    <title>Constructor Científico de Buyer Persona</title>
     <!-- Tailwind CSS Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM CDNs -->
@@ -110,7 +110,8 @@
         );
 
         // --- CONSTANTES GLOBALES DE CONFIGURACIÓN ---
-        const APP_TITLE = "Metodólogo Científico de Buyer Persona";
+        const APP_TITLE = "Constructor Científico de Buyer Persona";
+        const APP_SUBTITLE = "Crea el perfil real de tu cliente ideal usando datos reales de internet en lugar de suposiciones.";
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
 
         function App() {
@@ -585,38 +586,50 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                 element.remove();
             };
 
+            const restartSimulator = () => {
+                setSimulatorState({
+                    currentQuestionIndex: 0,
+                    score: 0,
+                    showFeedback: false,
+                    feedbackType: '',
+                    feedbackText: '',
+                    completed: false,
+                    history: []
+                });
+            };
+
             return (
-                <div className="flex flex-col min-h-screen">
-                    {/* NAV DE NAVEGACIÓN PRINCIPAL */}
-                    <header className="bg-slate-950 border-b border-teal-500/20 py-5 px-6 sticky top-0 z-40">
-                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-                            <div className="flex items-center gap-3">
-                                <div className="bg-gradient-to-tr from-teal-500 to-emerald-400 p-2.5 rounded-xl text-slate-950 shadow-lg shadow-teal-500/20">
-                                    <Compass className="h-6 w-6" />
+                <div className="flex flex-col min-h-screen bg-slate-900 text-slate-100 font-sans">
+                    {/* NAV DE NAVEGACIÓN PRINCIPAL OPTIMIZADA DESKTOP/MOBILE */}
+                    <header className="bg-slate-950 border-b border-teal-500/20 py-4 px-4 sm:px-6 sticky top-0 z-40">
+                        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+                            <div className="flex items-center gap-3 w-full lg:w-auto text-center lg:text-left justify-center lg:justify-start">
+                                <div className="bg-gradient-to-tr from-teal-500 to-emerald-400 p-2 rounded-xl text-slate-950 shadow-lg shadow-teal-500/20 shrink-0">
+                                    <Compass className="h-5 w-5 sm:h-6 sm:w-6" />
                                 </div>
                                 <div>
-                                    <h1 className="text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                                    <h1 className="text-lg sm:text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">
                                         {APP_TITLE}
                                     </h1>
-                                    <p className="text-xs text-teal-400 font-semibold tracking-wide uppercase">
-                                        Mapeador cualitativo anclado en datos reales (Grounding)
+                                    <p className="text-[10px] sm:text-xs text-teal-400 font-semibold tracking-wide uppercase mt-0.5">
+                                        {APP_SUBTITLE}
                                     </p>
                                 </div>
                             </div>
                             
-                            <nav className="flex flex-wrap bg-slate-900 p-1.5 rounded-xl border border-teal-500/10">
+                            <nav className="flex flex-wrap justify-center gap-1.5 p-1 bg-slate-900 rounded-xl border border-teal-500/10 w-full lg:w-auto">
                                 <button 
                                     onClick={() => setActiveTab('introduccion')}
-                                    className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'introduccion' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'introduccion' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
                                 >
-                                    <BookOpen className="h-3.5 w-3.5" />
+                                    <BookOpen className="h-3 w-3 shrink-0" />
                                     1. Metodología
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('cazador')}
-                                    className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'cazador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'cazador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
                                 >
-                                    <Target className="h-3.5 w-3.5" />
+                                    <Target className="h-3 w-3 shrink-0" />
                                     2. Creador Grounding
                                 </button>
                                 <button 
@@ -627,57 +640,70 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                         }
                                         setActiveTab('mapa');
                                     }}
-                                    className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all ${!generatedPersona ? 'opacity-40 cursor-not-allowed' : activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${!generatedPersona ? 'opacity-40 cursor-not-allowed' : activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
                                 >
-                                    <Brain className="h-3.5 w-3.5" />
+                                    <Brain className="h-3 w-3 shrink-0" />
                                     3. Visualizador
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('simulador')}
-                                    className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'simulador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'simulador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
                                 >
-                                    <Users className="h-3.5 w-3.5" />
+                                    <Users className="h-3 w-3 shrink-0" />
                                     4. Mom Test Game
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('ejemplos')}
-                                    className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'ejemplos' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'ejemplos' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
                                 >
-                                    <Users className="h-3.5 w-3.5" />
-                                    Mis Guardados ({savedPersonas.length})
+                                    <Users className="h-3 w-3 shrink-0" />
+                                    Biblioteca ({savedPersonas.length})
                                 </button>
                             </nav>
                         </div>
                     </header>
 
-                    {/* CUERPO */}
-                    <main className="flex-grow max-w-7xl w-full mx-auto px-4 md:px-6 py-8">
+                    {/* CUERPO PRINCIPAL CON CONTENEDORES RESPONSIVOS */}
+                    <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+                        
+                        {/* TAB 1: INTRODUCCIÓN Y METODOLOGÍA */}
                         {activeTab === 'introduccion' && (
-                            <div className="space-y-8 animate-fadeIn">
+                            <div className="space-y-6 sm:space-y-8 animate-fadeIn">
+                                {/* Explicación breve de la pestaña */}
+                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                                    <BookOpen className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                                    <div>
+                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Módulo 1: Fundamentos Científicos</h4>
+                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                                            Aprende por qué la mayoría de los emprendedores fallan al inventar a su cliente ideal y cómo la ciencia del marketing cualitativo resuelve este reto usando datos reales y empáticos.
+                                        </p>
+                                    </div>
+                                </div>
+
                                 <div className="bg-gradient-to-br from-teal-950 via-slate-900 to-slate-950 p-6 md:p-10 rounded-3xl border border-teal-500/20 shadow-xl relative overflow-hidden">
                                     <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
                                     <div className="relative z-10 max-w-3xl space-y-4">
                                         <span className="bg-teal-500/20 text-teal-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border border-teal-500/30">
                                             Enfoque Científico Validado
                                         </span>
-                                        <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
                                             No adivines a tu cliente.<br />
                                             <span className="bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">Usa la IA como copiloto cualitativo.</span>
                                         </h2>
-                                        <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+                                        <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed">
                                             Las guías tradicionales te incitan a inventar un avatar ficticio con Inteligencia Artificial. Esta aplicación rompe ese sesgo y te obliga a utilizar la **Netnografía** de Robert Kozinets, el **Mapa de Empatía** de Dave Gray, la teoría **Jobs-to-be-Done** de Clayton Christensen (Harvard) y la validación de **The Mom Test**.
                                         </p>
-                                        <div className="pt-4 flex flex-wrap gap-4">
+                                        <div className="pt-2 flex flex-wrap gap-3">
                                             <button 
                                                 onClick={() => setActiveTab('cazador')}
-                                                className="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-teal-500/20 transition flex items-center gap-2 text-xs"
+                                                className="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black px-5 py-3 rounded-xl shadow-lg hover:shadow-teal-500/20 transition flex items-center gap-2 text-xs"
                                             >
                                                 Ir al Creador Metodológico
-                                                <ArrowRight className="h-4 w-4" />
+                                                <ArrowRight className="h-4 w-4 shrink-0" />
                                             </button>
                                             <button 
                                                 onClick={() => handleLoadPreset(presets[0])}
-                                                className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-6 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2 text-xs"
+                                                className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-5 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2 text-xs"
                                             >
                                                 Ver un Ejemplo Listo (Anclaje Real)
                                             </button>
@@ -685,20 +711,20 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                    <div className="bg-slate-950 p-6 rounded-2xl border border-red-500/20 space-y-4">
-                                        <h3 className="text-red-400 font-extrabold text-base flex items-center gap-2">
-                                            <AlertTriangle className="h-5 w-5" />
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-red-500/20 space-y-3">
+                                        <h3 className="text-red-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
+                                            <AlertTriangle className="h-5 w-5 shrink-0" />
                                             El Error del Comportamiento Sintético
                                         </h3>
                                         <p className="text-slate-400 text-xs leading-relaxed">
-                                            Cuando pides a una IA que dibuje a un comprador ideal de la nada, obtienes un **perfil sintético de asunciones**. Basarás tus copys en dolores de mercado demasiado promedio (ej. <i>"ahorrar tiempo"</i>) que tu competencia repite de forma idéntica, diluyendo tu ventaja competitiva.
+                                            Cuando pides a una IA que dibuje a un comprador ideal de la nada, obtienes un **perfil sintético de asunciones**. Basarás tus estrategias en dolores de mercado demasiado promedio (como "ahorrar tiempo") que tu competencia repite de forma idéntica, diluyendo tu ventaja competitiva.
                                         </p>
                                     </div>
 
-                                    <div className="bg-slate-950 p-6 rounded-2xl border border-emerald-500/20 space-y-4">
-                                        <h3 className="text-emerald-400 font-extrabold text-base flex items-center gap-2">
-                                            <Award className="h-5 w-5" />
+                                    <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-emerald-500/20 space-y-3">
+                                        <h3 className="text-emerald-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
+                                            <Award className="h-5 w-5 shrink-0" />
                                             La Solución: Copiloto Analítico con Grounding
                                         </h3>
                                         <p className="text-slate-400 text-xs leading-relaxed">
@@ -709,16 +735,28 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                             </div>
                         )}
 
+                        {/* TAB 2: CREADOR METODOLÓGICO */}
                         {activeTab === 'cazador' && (
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start animate-fadeIn">
-                                <div className="lg:col-span-2 bg-slate-950 rounded-2xl border border-slate-800 p-6 space-y-6">
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start animate-fadeIn">
+                                <div className="lg:col-span-2 bg-slate-950 rounded-2xl border border-slate-800 p-5 sm:p-6 space-y-6">
+                                    {/* Explicación breve de la pestaña */}
+                                    <div className="bg-slate-900 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                                        <Target className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                                        <div>
+                                            <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">¿Qué es el Grounding?</h4>
+                                            <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                                                Consiste en "anclar" la Inteligencia Artificial a la realidad suministrándole quejas, testimonios y comentarios reales del mercado. Así, obligas a la tecnología a trabajar sobre datos empíricos reales en lugar de inventar estereotipos.
+                                            </p>
+                                        </div>
+                                    </div>
+
                                     <div className="border-b border-slate-800 pb-4">
-                                        <h3 className="font-bold text-lg text-slate-200">Creador Metodológico de Grounding</h3>
+                                        <h3 className="font-bold text-base sm:text-lg text-slate-200">Creador Metodológico de Grounding</h3>
                                     </div>
 
                                     <form onSubmit={generateWithIA} className="space-y-6 text-xs">
                                         <div className="space-y-4">
-                                            <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[10px]">Módulo 1: Tu Inventario de Sospechas (La P.U.V.)</span>
+                                            <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 1: Tu Inventario de Sospechas (La P.U.V.)</span>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div className="space-y-1.5">
                                                     <label className="block text-slate-300 font-bold">1. ¿Qué problema o necesidad asumes que resuelves?</label>
@@ -727,7 +765,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         value={suspectNeed}
                                                         onChange={(e) => setSuspectNeed(e.target.value)}
                                                         placeholder="Ej: Escribir textos de venta les toma días enteros de fatiga."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100"
+                                                        className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm"
                                                         required
                                                     />
                                                 </div>
@@ -738,7 +776,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         value={suspectWho}
                                                         onChange={(e) => setSuspectWho(e.target.value)}
                                                         placeholder="Ej: Emprendedores digitales y consultores."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100"
+                                                        className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm"
                                                         required
                                                     />
                                                 </div>
@@ -747,19 +785,19 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
 
                                         <div className="space-y-4 pt-4 border-t border-slate-800">
                                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                                <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[10px]">Módulo 2: Datos Netnográficos Reales (Grounding Data)</span>
+                                                <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 2: Datos Netnográficos Reales (Grounding Data)</span>
                                             </div>
                                             <textarea
                                                 value={rawNetnography}
                                                 onChange={(e) => setRawNetnography(e.target.value)}
-                                                placeholder="Pega testimonios literales o quejas..."
-                                                className="w-full h-32 bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 font-mono text-[11px]"
+                                                placeholder="Pega testimonios literales o quejas de foros, Amazon, etc..."
+                                                className="w-full h-32 bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 font-mono text-xs sm:text-sm"
                                                 required
                                             />
                                         </div>
 
                                         <div className="space-y-4 pt-4 border-t border-slate-800">
-                                            <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[10px]">Módulo 3: Jobs-to-be-Done (La Motivación)</span>
+                                            <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 3: Jobs-to-be-Done (La Motivación)</span>
                                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                 <div className="space-y-1.5">
                                                     <label className="block text-slate-300 font-bold">1. Job Funcional (Tarea técnica)</label>
@@ -768,7 +806,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         value={jobFunctional}
                                                         onChange={(e) => setJobFunctional(e.target.value)}
                                                         placeholder="Ej: Escribir copys rápido."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100"
+                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
                                                     />
                                                 </div>
                                                 <div className="space-y-1.5">
@@ -778,7 +816,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         value={jobEmotional}
                                                         onChange={(e) => setJobEmotional(e.target.value)}
                                                         placeholder="Ej: Sentirme tranquilo con el tono."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100"
+                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
                                                     />
                                                 </div>
                                                 <div className="space-y-1.5">
@@ -788,14 +826,14 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         value={jobSocial}
                                                         onChange={(e) => setJobSocial(e.target.value)}
                                                         placeholder="Ej: Parecer experto y empático."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100"
+                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
                                                     />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="p-4 bg-slate-900 rounded-xl border border-teal-500/10 space-y-2">
-                                            <label className="block text-slate-300 font-bold">Gemini API Key (Opcional)</label>
+                                            <label className="block text-slate-300 font-bold text-xs sm:text-sm">Gemini API Key (Opcional)</label>
                                             <input 
                                                 type="password"
                                                 value={apiKey}
@@ -805,18 +843,18 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             />
                                         </div>
 
-                                        <div className="flex gap-3 justify-between pt-2 border-t border-slate-800">
+                                        <div className="flex flex-col sm:flex-row gap-3 justify-between pt-2 border-t border-slate-800">
                                             <button
                                                 type="button"
                                                 onClick={copyPromptCric}
-                                                className="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl border border-slate-800"
+                                                className="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-3 rounded-xl border border-slate-800 text-xs"
                                             >
                                                 Copiar Prompt C.R.I.C. Maestro
                                             </button>
                                             <button
                                                 type="submit"
                                                 disabled={isGenerating}
-                                                className="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-6 py-2.5 rounded-xl disabled:opacity-50"
+                                                className="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-6 py-3 rounded-xl disabled:opacity-50 text-xs"
                                             >
                                                 {isGenerating ? "Analizando..." : "Generar con IA"}
                                             </button>
@@ -832,97 +870,129 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             className="w-full text-left p-3.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-teal-500 text-xs transition"
                                         >
                                             <span className="font-bold text-slate-200 text-xs block">{presets[0].title}</span>
-                                            <span className="text-[10px] text-slate-400 line-clamp-2 italic">"{presets[0].rawNetnography.split('\n')[2]}"</span>
+                                            <span className="text-[10px] text-slate-400 line-clamp-2 italic mt-1">"{presets[0].rawNetnography.split('\n')[2]}"</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         )}
 
+                        {/* TAB 3: VISUALIZADOR DE PERFIL */}
                         {activeTab === 'mapa' && generatedPersona && (
-                            <div className="space-y-8 animate-fadeIn">
-                                <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex justify-between items-center gap-4">
+                            <div className="space-y-6 sm:space-y-8 animate-fadeIn">
+                                {/* Explicación breve de la pestaña */}
+                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                                    <Brain className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                                    <div>
+                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Lienzo Psicológico de Buyer Persona</h4>
+                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                                            Aquí visualizas la psicología profunda de tu cliente ideal estructurada bajo los frameworks de Mapa de Empatía (Dave Gray) y Jobs-to-be-Done (Clayton Christensen).
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 text-xl font-black">
+                                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 text-lg sm:text-xl font-black">
                                             {generatedPersona.nombre[0]}
                                         </div>
                                         <div>
-                                            <h2 className="text-xl font-bold text-slate-200">{generatedPersona.nombre}</h2>
+                                            <h2 className="text-lg sm:text-xl font-bold text-slate-200">{generatedPersona.nombre}</h2>
                                             <p className="text-xs text-slate-400 mt-1">{generatedPersona.ocupacion} • {generatedPersona.edad}</p>
                                         </div>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <button onClick={downloadTxt} className="bg-slate-900 border border-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs">Descargar TXT</button>
-                                        <button onClick={savePersona} className="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs">Guardar en Biblioteca</button>
+                                    <div className="flex gap-2 w-full sm:w-auto">
+                                        <button onClick={downloadTxt} className="flex-1 sm:flex-none bg-slate-900 border border-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-xs">Descargar TXT</button>
+                                        <button onClick={savePersona} className="flex-1 sm:flex-none bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs">Guardar Perfil</button>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                    <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-5">
+                                    <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 space-y-5">
                                         <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">Ficha Sociodemográfica</h3>
-                                        <p className="text-xs text-slate-300 bg-slate-900 p-4 rounded-xl border border-slate-800 leading-relaxed">{generatedPersona.resumen_perfil}</p>
+                                        <p className="text-xs sm:text-sm text-slate-300 bg-slate-900 p-4 rounded-xl border border-slate-800 leading-relaxed">{generatedPersona.resumen_perfil}</p>
                                     </div>
 
-                                    <div className="lg:col-span-2 bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-5">
+                                    <div className="lg:col-span-2 bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 space-y-5">
                                         <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">Trabajos por Hacer (JTBD)</h3>
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                             <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                                                 <span className="text-teal-400 font-extrabold text-[10px] uppercase">Funcional</span>
-                                                <p className="text-xs text-slate-300 mt-1">{generatedPersona.jobs_desglose?.funcional}</p>
+                                                <p className="text-xs sm:text-sm text-slate-300 mt-1">{generatedPersona.jobs_desglose?.funcional}</p>
                                             </div>
                                             <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                                                 <span className="text-pink-400 font-extrabold text-[10px] uppercase">Emocional</span>
-                                                <p className="text-xs text-slate-300 mt-1">{generatedPersona.jobs_desglose?.emocional}</p>
+                                                <p className="text-xs sm:text-sm text-slate-300 mt-1">{generatedPersona.jobs_desglose?.emocional}</p>
                                             </div>
                                             <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                                                 <span className="text-indigo-400 font-extrabold text-[10px] uppercase">Social</span>
-                                                <p className="text-xs text-slate-300 mt-1">{generatedPersona.jobs_desglose?.social}</p>
+                                                <p className="text-xs sm:text-sm text-slate-300 mt-1">{generatedPersona.jobs_desglose?.social}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="space-y-4">
-                                    <h3 className="text-lg font-bold text-slate-200">El Mapa de Empatía Científico</h3>
+                                    <h3 className="text-base sm:text-lg font-bold text-slate-200">El Mapa de Empatía Científico</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                         <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                             <span className="text-pink-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué piensa y siente?</span>
-                                            {generatedPersona.que_piensa_y_siente?.map((item, i) => <p key={i} className="text-xs bg-slate-900 p-2 rounded-lg">{item}</p>)}
+                                            {generatedPersona.que_piensa_y_siente?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
                                         </div>
                                         <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                             <span className="text-indigo-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué ve?</span>
-                                            {generatedPersona.que_ve?.map((item, i) => <p key={i} className="text-xs bg-slate-900 p-2 rounded-lg">{item}</p>)}
+                                            {generatedPersona.que_ve?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
                                         </div>
                                         <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                             <span className="text-sky-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué oye?</span>
-                                            {generatedPersona.que_oye?.map((item, i) => <p key={i} className="text-xs bg-slate-900 p-2 rounded-lg">{item}</p>)}
+                                            {generatedPersona.que_oye?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
                                         </div>
                                         <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                             <span className="text-emerald-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué dice y hace?</span>
-                                            {generatedPersona.que_dice_y_hace?.map((item, i) => <p key={i} className="text-xs bg-slate-900 p-2 rounded-lg">{item}</p>)}
+                                            {generatedPersona.que_dice_y_hace?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         )}
 
+                        {/* TAB 4: SIMULADOR GAMIFICADO "THE MOM TEST" */}
                         {activeTab === 'simulador' && (
                             <div className="max-w-3xl mx-auto space-y-6 animate-fadeIn">
-                                <div className="bg-slate-950 border border-slate-800 p-6 rounded-3xl space-y-4">
-                                    <h3 className="font-extrabold text-lg text-slate-200">El Simulador "The Mom Test"</h3>
-                                    <p className="text-xs text-slate-400">Valida tus hipótesis de cliente real con preguntas empíricas y evita los falsos positivos.</p>
+                                {/* Explicación breve de la pestaña */}
+                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                                    <Users className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                                    <div>
+                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">¿Qué es el Mom Test Game?</h4>
+                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                                            Un simulador interactivo de validación de campo. Aprende a entrevistar clientes reales basándote en el libro "The Mom Test" para evitar opiniones falsas de cortesía.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-slate-950 border border-slate-800 p-5 sm:p-6 rounded-3xl space-y-4">
+                                    <h3 className="font-extrabold text-base sm:text-lg text-slate-200">El Simulador "The Mom Test"</h3>
+                                    <p className="text-xs sm:text-sm text-slate-400">Valida tus hipótesis de cliente real con preguntas empíricas y evita los falsos positivos.</p>
                                 </div>
 
                                 {!simulatorState.completed ? (
-                                    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6">
-                                        <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs text-slate-200">{momTestQuestions[simulatorState.currentQuestionIndex].context}</div>
+                                    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-6">
+                                        <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs sm:text-sm text-slate-200 leading-relaxed">
+                                            {momTestQuestions[simulatorState.currentQuestionIndex].context}
+                                        </div>
                                         <div className="space-y-3">
                                             {momTestQuestions[simulatorState.currentQuestionIndex].options.map((opt, i) => (
-                                                <button key={i} onClick={() => handleSimulateAnswer(opt)} className="w-full text-left p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs font-bold text-slate-200 transition flex justify-between items-center">{opt.text}</button>
+                                                <button 
+                                                    key={i} 
+                                                    onClick={() => handleSimulateAnswer(opt)} 
+                                                    className="w-full text-left p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs sm:text-sm font-bold text-slate-200 transition flex justify-between items-center gap-2"
+                                                >
+                                                    <span>{opt.text}</span>
+                                                </button>
                                             ))}
                                         </div>
                                         {simulatorState.showFeedback && (
-                                            <div className={`p-4 rounded-xl border text-xs leading-relaxed ${simulatorState.feedbackType === 'buena' ? 'bg-emerald-950/25 border-emerald-500/20 text-emerald-300' : 'bg-rose-950/25 border-rose-500/20 text-rose-300'}`}>
+                                            <div className={`p-4 rounded-xl border text-xs sm:text-sm leading-relaxed ${simulatorState.feedbackType === 'buena' ? 'bg-emerald-950/25 border-emerald-500/20 text-emerald-300' : 'bg-rose-950/25 border-rose-500/20 text-rose-300'}`}>
                                                 <p className="font-black">{simulatorState.feedbackType === 'buena' ? '✓ Respuesta Correcta' : '⚠️ Alerta de Sesgo'}</p>
                                                 <p className="mt-1">{simulatorState.feedbackText}</p>
                                             </div>
@@ -930,26 +1000,38 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                     </div>
                                 ) : (
                                     <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 text-center space-y-6">
-                                        <h4 className="text-xl font-bold">Simulación Completada</h4>
-                                        <p className="text-xs text-slate-400">Puntaje total obtenido en la entrevista: <span className="font-black text-teal-400">{simulatorState.score}%</span></p>
-                                        <button onClick={restartSimulator} className="bg-slate-900 border border-slate-800 text-slate-300 font-bold px-6 py-2.5 rounded-xl text-xs mx-auto">Reiniciar simulador</button>
+                                        <h4 className="text-lg sm:text-xl font-bold">Simulación Completada</h4>
+                                        <p className="text-xs sm:text-sm text-slate-400">Puntaje total obtenido en la entrevista: <span className="font-black text-teal-400">{simulatorState.score}%</span></p>
+                                        <button onClick={restartSimulator} className="bg-slate-900 border border-slate-800 text-slate-300 font-bold px-6 py-3 rounded-xl text-xs mx-auto">Reiniciar simulador</button>
                                     </div>
                                 )}
                             </div>
                         )}
 
+                        {/* TAB 5: BIBLIOTECA */}
                         {activeTab === 'ejemplos' && (
-                            <div className="space-y-8 animate-fadeIn">
-                                <h3 className="text-xl font-bold">Mis Buyer Personas Guardados</h3>
+                            <div className="space-y-6 sm:space-y-8 animate-fadeIn">
+                                {/* Explicación breve de la pestaña */}
+                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                                    <Users className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                                    <div>
+                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Historial de Perfiles</h4>
+                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                                            Tu base de datos local para guardar, comparar y consultar los arquetipos cualitativos validados que hayas creado.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <h3 className="text-lg sm:text-xl font-bold">Mis Buyer Personas Guardados</h3>
                                 {savedPersonas.length === 0 ? (
-                                    <p className="text-xs text-slate-400">No tienes perfiles guardados de momento.</p>
+                                    <p className="text-xs sm:text-sm text-slate-400">No tienes perfiles guardados de momento.</p>
                                 ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {savedPersonas.map((persona) => (
                                             <div key={persona.id} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
                                                 <h4 className="font-bold text-slate-200 text-sm">{persona.nombre}</h4>
                                                 <p className="text-xs text-slate-400">{persona.ocupacion}</p>
-                                                <button onClick={() => { setGeneratedPersona(persona); setActiveTab('mapa'); }} className="w-full bg-slate-900 hover:bg-slate-800 text-xs font-bold py-2 rounded-xl">Visualizar</button>
+                                                <button onClick={() => { setGeneratedPersona(persona); setActiveTab('mapa'); }} className="w-full bg-slate-900 hover:bg-slate-800 text-xs font-bold py-2.5 rounded-xl">Visualizar</button>
                                             </div>
                                         ))}
                                     </div>
@@ -957,6 +1039,19 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                             </div>
                         )}
                     </main>
+
+                    {/* PIE DE PÁGINA PREMIUM CON ENLACES DEL AUTOR */}
+                    <footer className="bg-slate-950 border-t border-teal-500/10 py-8 px-4 sm:px-6 text-center text-slate-400 text-xs space-y-3">
+                        <p className="max-w-2xl mx-auto leading-relaxed text-[11px] sm:text-xs">
+                            Esta aplicación interactiva es un material de apoyo metodológico y práctico para lectores de la <strong>"Guía Científica y Práctica para Construir tu Buyer Persona con IA"</strong>.
+                        </p>
+                        <p className="text-teal-400 font-bold text-[10px] sm:text-xs uppercase tracking-wider">
+                            Desarrollado por <a href="https://rodolfobuitrago.com" target="_blank" rel="noopener noreferrer" class="hover:underline text-teal-300 font-extrabold transition-all">Rodolfo Buitrago</a>
+                        </p>
+                        <p className="text-slate-500 text-[10px] sm:text-[11px]">
+                            Visita <a href="https://rodolfobuitrago.com" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline hover:text-teal-300 font-bold">rodolfobuitrago.com</a> para acceder a más herramientas y programas de entrenamiento de IA aplicados a ventas.
+                        </p>
+                    </footer>
                 </div>
             );
         }
