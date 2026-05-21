@@ -583,7 +583,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                 const socialJob = jobSocial || "[Imagen de Experto]";
 
                 return {
-                    adDolor: `📢 ANUNCIO (Fórmula PAS - Foco en Dolor):\n\n¿Cansado de sentir que ${need}?\n\nSi eres ${who}, sabes perfectamente de qué hablo. Pasa los días enteros perdiendo tiempo valioso en flujos ineficientes mientras tu competencia avanza.\n\nExiste un método científico diseñado para resolver este atasco de raíz sin que tengas que improvisar o asumir riesgos.\n\n👉 Haz clic para ver cómo funciona gratis hoy.`,
+                    adDolor: `📢 ANUNCIO (Fórmula PAS - Foco en Dolor):\n\n¿Cansado de sentir que ${need}?\n\nSi eres ${who}, sabes perfectamente de qué hablo. Pasa los días enteros perdiendo tiempo valioso en flujos ineficientes mientras tu competencia avanza.\n\nExiste un método científico diseñado para resolver este antesco de raíz sin que tengas que improvisar o asumir riesgos.\n\n👉 Haz clic para ver cómo funciona gratis hoy.`,
                     emailDeseo: `📧 EMAIL DE SECUENCIA (Foco en JTBD Emocional & Social):\n\nAsunto: Lo que de verdad te frena para ${emotionalJob}...\n\nHola,\n\nTodos en tu entorno asumen que tu meta al automatizar es simplemente ahorrar tiempo. Pero la realidad es otra.\n\nLo que verdaderamente buscas es poder ${emotionalJob} y que tu equipo te perciba como un ${socialJob}.\n\nEl obstáculo es que sigues cargando con el peso de tener que resolver ${need} de forma manual.\n\nHe diseñado una plantilla paso a paso que elimina esa carga. Descárgala en el siguiente enlace.\n\nUn abrazo.`,
                     landingPage: `📄 COPY DE LANDING PAGE (Derribando la Objeción Principal):\n\n¿Preocupado de que la solución falle porque temes que ${obstacle}?\n\nEs un miedo normal. En el mercado abundan las herramientas genéricas que se sienten frías e impersonales. Sin embargo, nuestro sistema ha sido entrenado de forma científica utilizando la metodología de Grounding, asegurando que cada resultado respete tu voz y mantenga un estándar profesional absoluto.\n\n[BOTÓN DE ACCIÓN] -> Registrarme gratis ahora.`
                 };
@@ -595,7 +595,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                     return "🏆 ¡Investigador UX Experto! Sabes hacer preguntas empíricas y evitas los sesgos de amabilidad de los clientes.";
                 }
                 if (score >= 60) {
-                    return "👍 ¡Buen camino! Sabes cómo anclar varias preguntas, pero aún caes en la tentación de preguntar sobre el futuro.";
+                    return "👍 ¡Buen camino! Sabes cómo anclar varias preguntas, pero aún cae en la tentación de preguntar sobre el futuro.";
                 }
                 return "⚠️ ¡Peligro de Falsos Positivos! Tiendes a vender la idea en vez de investigar hechos pasados del cliente.";
             };
@@ -624,35 +624,35 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                             <nav className="flex flex-wrap justify-center gap-1.5 p-1 bg-slate-900 rounded-xl border border-teal-500/10 w-full lg:w-auto">
                                 <button 
                                     onClick={() => setActiveTab('introduccion')}
-                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'introduccion' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'introduccion' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <BookOpen className="h-3 w-3 shrink-0" />
                                     1. Metodología
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('cazador')}
-                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'cazador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'cazador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Target className="h-3 w-3 shrink-0" />
                                     2. Creador Grounding
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('mapa')}
-                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Brain className="h-3 w-3 shrink-0" />
                                     3. Visualizador
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('simulador')}
-                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'simulador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'simulador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Users className="h-3 w-3 shrink-0" />
                                     4. Mom Test Game
                                 </button>
                                 <button 
                                     onClick={() => setActiveTab('ejemplos')}
-                                    className={`flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all ${activeTab === 'ejemplos' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'ejemplos' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Users className="h-3 w-3 shrink-0" />
                                     Biblioteca ({savedPersonas.length})
@@ -743,7 +743,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                         <div>
                                             <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">¿Qué es el Grounding?</h4>
                                             <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                                                Consiste en "anclar" la Inteligencia Artificial a la realidad suministrále quejas, testimonios y comentarios reales del mercado. Así, obligas a la tecnología a trabajar sobre datos empíricos reales en lugar de inventar estereotipos.
+                                                Consiste en "anclar" la Inteligencia Artificial a la realidad suministrándole quejas, testimonios y comentarios reales del mercado. Así, obligas a la tecnología a trabajar sobre datos empíricos reales en lugar de inventar estereotipos.
                                             </p>
                                         </div>
                                     </div>
@@ -942,7 +942,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                 <p className="text-xs sm:text-sm text-slate-300 bg-slate-900 p-4 rounded-xl border border-slate-800 leading-relaxed font-medium">{generatedPersona.resumen_perfil}</p>
                                                 <div className="space-y-2 mt-2">
                                                     <span className="text-slate-400 font-bold block text-[10px] uppercase tracking-wider">Hábitos de Compra:</span>
-                                                    <p className="text-xs text-slate-300 bg-slate-900 p-3 rounded-lg border border-slate-800 leading-relaxed">
+                                                    <p className="text-xs text-slate-300 bg-slate-900 p-3 rounded-lg border border-slate-800 leading-relaxed font-medium">
                                                         {generatedPersona.comportamiento_compra}
                                                     </p>
                                                 </div>
@@ -953,15 +953,15 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                     <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                                                         <span className="text-teal-400 font-extrabold text-[10px] uppercase">Funcional</span>
-                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{generatedPersona.jobs_desglose?.funcional || jobFunctional || "Por rellenar en el Módulo 3"}</p>
+                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{ (generatedPersona.jobs_desglose && generatedPersona.jobs_desglose.funcional) || jobFunctional || "Por rellenar en el Módulo 3" }</p>
                                                     </div>
                                                     <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                                                         <span className="text-pink-400 font-extrabold text-[10px] uppercase">Emocional</span>
-                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{generatedPersona.jobs_desglose?.emocional || jobEmotional || "Por rellenar en el Módulo 3"}</p>
+                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{ (generatedPersona.jobs_desglose && generatedPersona.jobs_desglose.emocional) || jobEmotional || "Por rellenar en el Módulo 3" }</p>
                                                     </div>
                                                     <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                                                         <span className="text-indigo-400 font-extrabold text-[10px] uppercase">Social</span>
-                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{generatedPersona.jobs_desglose?.social || jobSocial || "Por rellenar en el Módulo 3"}</p>
+                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{ (generatedPersona.jobs_desglose && generatedPersona.jobs_desglose.social) || jobSocial || "Por rellenar en el Módulo 3" }</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -989,11 +989,11 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         <span className="text-[9px] bg-red-500/10 text-red-400 font-extrabold px-2 py-0.5 rounded-full border border-red-500/20">Fórmula PAS (Dolor)</span>
                                                         <h4 className="font-bold text-slate-200 text-xs sm:text-sm">1. Copy para Redes o Anuncio</h4>
                                                         <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto">
-                                                            {generatedPersona.estrategia_marketing?.[1] || computedLocalCopys.adDolor}
+                                                            { (generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[1]) || computedLocalCopys.adDolor }
                                                         </p>
                                                     </div>
                                                     <button 
-                                                        onClick={() => copySpecificText(generatedPersona.estrategia_marketing?.[1] || computedLocalCopys.adDolor, "Copy de Anuncio")}
+                                                        onClick={() => copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[1]) || computedLocalCopys.adDolor, "Copy de Anuncio")}
                                                         className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
                                                     >
                                                         Copiar Copy de Anuncio
@@ -1023,11 +1023,11 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         <span className="text-[9px] bg-indigo-500/10 text-indigo-400 font-extrabold px-2 py-0.5 rounded-full border border-indigo-500/20">Rompe-Objeción Principal</span>
                                                         <h4 className="font-bold text-slate-200 text-xs sm:text-sm">3. Mensaje para Landing Page</h4>
                                                         <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto">
-                                                            {generatedPersona.estrategia_marketing?.[0] || computedLocalCopys.landingPage}
+                                                            { (generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[0]) || computedLocalCopys.landingPage }
                                                         </p>
                                                     </div>
                                                     <button 
-                                                        onClick={() => copySpecificText(generatedPersona.estrategia_marketing?.[0] || computedLocalCopys.landingPage, "Copy de Landing Page")}
+                                                        onClick={() => copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[0]) || computedLocalCopys.landingPage, "Copy de Landing Page")}
                                                         className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
                                                     >
                                                         Copiar Copy de Landing
@@ -1041,19 +1041,19 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-pink-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué piensa y siente?</span>
-                                                    {generatedPersona.que_piensa_y_siente?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
+                                                    { (generatedPersona.que_piensa_y_siente && generatedPersona.que_piensa_y_siente.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
                                                 </div>
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-indigo-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué ve?</span>
-                                                    {generatedPersona.que_ve?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
+                                                    { (generatedPersona.que_ve && generatedPersona.que_ve.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
                                                 </div>
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-sky-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué oye?</span>
-                                                    {generatedPersona.que_oye?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
+                                                    { (generatedPersona.que_oye && generatedPersona.que_oye.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
                                                 </div>
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-emerald-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué dice y hace?</span>
-                                                    {generatedPersona.que_dice_y_hace?.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)}
+                                                    { (generatedPersona.que_dice_y_hace && generatedPersona.que_dice_y_hace.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
                                                 </div>
                                             </div>
                                         </div>
@@ -1098,7 +1098,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             ))}
                                         </div>
                                         {simulatorState.showFeedback && (
-                                            <div className={`p-4 rounded-xl border text-xs sm:text-sm leading-relaxed ${simulatorState.feedbackType === 'buena' ? 'bg-emerald-950/25 border-emerald-500/20 text-emerald-300' : 'bg-rose-950/25 border-rose-500/20 text-rose-300'}`}>
+                                            <div className={"p-4 rounded-xl border text-xs sm:text-sm leading-relaxed " + (simulatorState.feedbackType === 'buena' ? 'bg-emerald-950/25 border-emerald-500/20 text-emerald-300' : 'bg-rose-950/25 border-rose-500/20 text-rose-300')}>
                                                 <p className="font-black">{simulatorState.feedbackType === 'buena' ? '✓ Respuesta Correcta' : '⚠️ Alerta de Sesgo'}</p>
                                                 <p className="mt-1">{simulatorState.feedbackText}</p>
                                             </div>
@@ -1140,7 +1140,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             <div key={persona.id} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
                                                 <h4 className="font-bold text-slate-200 text-sm">{persona.nombre}</h4>
                                                 <p className="text-xs text-slate-400">{persona.ocupacion}</p>
-                                                <button onClick={() => { setGeneratedPersona(persona); setActiveTab('mapa'); }} className="w-full bg-slate-900 hover:bg-slate-850 text-xs font-bold py-2.5 rounded-xl">Visualizar</button>
+                                                <button onClick={() => { setGeneratedPersona(persona); setActiveTab('mapa'); }} className="w-full bg-slate-900 hover:bg-slate-850 text-xs font-bold py-2.5 rounded-xl font-medium">Visualizar</button>
                                             </div>
                                         ))}
                                     </div>
