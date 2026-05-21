@@ -27,64 +27,225 @@
     
     <div id="root"></div>
 
-    <script type="text/babel">
+    <!-- Forzamos a Babel a compilar con presets estándar de ES6 y React -->
+    <script type="text/babel" data-presets="env,react">
         const { useState, useEffect } = React;
 
-        // --- COMPONENTES DE ICONOS SVG INTEGRADOS ---
-        const Compass = ({ className = "h-6 w-6" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-        );
-        const Brain = ({ className = "h-5 w-5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z"></path></svg>
-        );
-        const Eye = ({ className = "h-5 w-5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-        );
-        const Volume2 = ({ className = "h-5 w-5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-        );
-        const MessageSquare = ({ className = "h-5 w-5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        );
-        const Activity = ({ className = "h-5 w-5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-        );
-        const Smile = ({ className = "h-5 w-5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-        );
-        const Sparkles = ({ className = "h-4 w-4" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707-.707M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"></path></svg>
-        );
-        const BookOpen = ({ className = "h-3.5 w-3.5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-        );
-        const Target = ({ className = "h-3.5 w-3.5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-        );
-        const Users = ({ className = "h-3.5 w-3.5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        );
-        const HelpCircle = ({ className = "h-4 w-4" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-        );
-        const Check = ({ className = "h-4 w-4" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"></polyline></svg>
-        );
-        const Download = ({ className = "h-4 w-4" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        );
-        const ArrowRight = ({ className = "h-4 w-4" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        );
-        const RotateCcw = ({ className = "h-4 w-4" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
-        );
-        const Trash2 = ({ className = "h-3.5 w-3.5" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-        );
-        const Save = ({ className = "h-4 w-4" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-        );
+        // --- COMPONENTES DE ICONOS SVG INTEGRADOS (Ingeniería Defensiva para Babel) ---
+        const Compass = function(props) {
+            const className = props.className || "h-6 w-6";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+            );
+        };
+
+        const Brain = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2z"></path>
+                    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z"></path>
+                </svg>
+            );
+        };
+
+        const Eye = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            );
+        };
+
+        const Volume2 = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+            );
+        };
+
+        const MessageSquare = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            );
+        };
+
+        const Activity = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+            );
+        };
+
+        const Smile = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+            );
+        };
+
+        const Sparkles = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707-.707M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"></path>
+                </svg>
+            );
+        };
+
+        const BookOpen = function(props) {
+            const className = props.className || "h-3.5 w-3.5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+            );
+        };
+
+        const Target = function(props) {
+            const className = props.className || "h-3.5 w-3.5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="6"></circle>
+                    <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+            );
+        };
+
+        const Users = function(props) {
+            const className = props.className || "h-3.5 w-3.5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            );
+        };
+
+        const HelpCircle = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            );
+        };
+
+        const Check = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            );
+        };
+
+        const Download = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            );
+        };
+
+        const ArrowRight = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            );
+        };
+
+        const RotateCcw = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <polyline points="3 3 3 8 8 8"></polyline>
+                </svg>
+            );
+        };
+
+        const Trash2 = function(props) {
+            const className = props.className || "h-3.5 w-3.5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+            );
+        };
+
+        const Save = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+            );
+        };
+
+        const UserIcon = function(props) {
+            const className = props.className || "h-4 w-4";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            );
+        };
+
+        const Play = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+            );
+        };
+
+        const Award = function(props) {
+            const className = props.className || "h-5 w-5";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+            );
+        };
 
         // --- CONSTANTES GLOBALES DE CONFIGURACIÓN ---
         const APP_TITLE = "Constructor Científico de Buyer Persona";
@@ -233,7 +394,7 @@
                             "Dice en redes sociales que escribir es fácil, pero en privado confiesa que le drena la energía."
                         ],
                         dolores: [
-                            "El 'síndrome de la hoja en blanco' al dseñar ofertas comerciales.",
+                            "El 'síndrome de la hoja en blanco' al diseñar ofertas comerciales.",
                             "Textos mecánicos generados por IA genérica que destruyen el engagement de su lista.",
                             "Saturación de tiempo operativo en marketing en detrimento de la atención a sus alumnos."
                         ],
@@ -623,35 +784,35 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                             
                             <nav className="flex flex-wrap justify-center gap-1.5 p-1 bg-slate-900 rounded-xl border border-teal-500/10 w-full lg:w-auto">
                                 <button 
-                                    onClick={() => setActiveTab('introduccion')}
+                                    onClick={function() { setActiveTab('introduccion'); }}
                                     className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'introduccion' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <BookOpen className="h-3 w-3 shrink-0" />
                                     1. Metodología
                                 </button>
                                 <button 
-                                    onClick={() => setActiveTab('cazador')}
+                                    onClick={function() { setActiveTab('cazador'); }}
                                     className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'cazador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Target className="h-3 w-3 shrink-0" />
                                     2. Creador Grounding
                                 </button>
                                 <button 
-                                    onClick={() => setActiveTab('mapa')}
+                                    onClick={function() { setActiveTab('mapa'); }}
                                     className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Brain className="h-3 w-3 shrink-0" />
                                     3. Visualizador
                                 </button>
                                 <button 
-                                    onClick={() => setActiveTab('simulador')}
+                                    onClick={function() { setActiveTab('simulador'); }}
                                     className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'simulador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Users className="h-3 w-3 shrink-0" />
                                     4. Mom Test Game
                                 </button>
                                 <button 
-                                    onClick={() => setActiveTab('ejemplos')}
+                                    onClick={function() { setActiveTab('ejemplos'); }}
                                     className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'ejemplos' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
                                 >
                                     <Users className="h-3 w-3 shrink-0" />
@@ -693,14 +854,14 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                         </p>
                                         <div className="pt-2 flex flex-wrap gap-3">
                                             <button 
-                                                onClick={() => setActiveTab('cazador')}
+                                                onClick={function() { setActiveTab('cazador'); }}
                                                 className="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black px-5 py-3 rounded-xl shadow-lg hover:shadow-teal-500/20 transition flex items-center gap-2 text-xs"
                                             >
                                                 Ir al Creador Metodológico
                                                 <ArrowRight className="h-4 w-4 shrink-0" />
                                             </button>
                                             <button 
-                                                onClick={() => handleLoadPreset(presets[0])}
+                                                onClick={function() { handleLoadPreset(presets[0]); }}
                                                 className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-5 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2 text-xs"
                                             >
                                                 Ver un Ejemplo Listo (Anclaje Real)
@@ -761,7 +922,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                     <input 
                                                         type="text"
                                                         value={suspectNeed}
-                                                        onChange={(e) => setSuspectNeed(e.target.value)}
+                                                        onChange={function(e) { setSuspectNeed(e.target.value); }}
                                                         placeholder="Ej: Escribir textos de venta les toma días enteros de fatiga."
                                                         className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm"
                                                         required
@@ -772,7 +933,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                     <input 
                                                         type="text"
                                                         value={suspectWho}
-                                                        onChange={(e) => setSuspectWho(e.target.value)}
+                                                        onChange={function(e) { setSuspectWho(e.target.value); }}
                                                         placeholder="Ej: Emprendedores digitales y consultores."
                                                         className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm"
                                                         required
@@ -787,7 +948,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             </div>
                                             <textarea
                                                 value={rawNetnography}
-                                                onChange={(e) => setRawNetnography(e.target.value)}
+                                                onChange={function(e) { setRawNetnography(e.target.value); }}
                                                 placeholder="Pega testimonios literales o quejas de foros, Amazon, etc..."
                                                 className="w-full h-32 bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 font-mono text-xs sm:text-sm"
                                                 required
@@ -802,7 +963,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                     <input 
                                                         type="text"
                                                         value={jobFunctional}
-                                                        onChange={(e) => setJobFunctional(e.target.value)}
+                                                        onChange={function(e) { setJobFunctional(e.target.value); }}
                                                         placeholder="Ej: Escribir copys rápido."
                                                         className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
                                                     />
@@ -812,7 +973,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                     <input 
                                                         type="text"
                                                         value={jobEmotional}
-                                                        onChange={(e) => setJobEmotional(e.target.value)}
+                                                        onChange={function(e) { setJobEmotional(e.target.value); }}
                                                         placeholder="Ej: Sentirme tranquilo con el tono."
                                                         className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
                                                     />
@@ -822,7 +983,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                     <input 
                                                         type="text"
                                                         value={jobSocial}
-                                                        onChange={(e) => setJobSocial(e.target.value)}
+                                                        onChange={function(e) { setJobSocial(e.target.value); }}
                                                         placeholder="Ej: Parecer experto y empático."
                                                         className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
                                                     />
@@ -835,7 +996,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             <input 
                                                 type="password"
                                                 value={apiKey}
-                                                onChange={(e) => setApiKey(e.target.value)}
+                                                onChange={function(e) { setApiKey(e.target.value); }}
                                                 placeholder="Ingresa tu clave de API si tienes una..."
                                                 className="w-full bg-slate-950 border border-slate-800 p-2 rounded-lg text-xs font-mono text-teal-300"
                                             />
@@ -864,7 +1025,8 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                     <div className="bg-slate-950 border border-slate-800 p-5 rounded-2xl space-y-4">
                                         <h4 className="font-bold text-xs text-slate-200 uppercase tracking-wider">Prueba rápida con plantilla</h4>
                                         <button
-                                            onClick={() => handleLoadPreset(presets[0])}
+                                            type="button"
+                                            onClick={function() { handleLoadPreset(presets[0]); }}
                                             className="w-full text-left p-3.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-teal-500 text-xs transition"
                                         >
                                             <span className="font-bold text-slate-200 text-xs block">{presets[0].title}</span>
@@ -903,13 +1065,13 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                         </div>
                                         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
                                             <button 
-                                                onClick={() => handleLoadPreset(presets[0])}
+                                                onClick={function() { handleLoadPreset(presets[0]); }}
                                                 className="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-extrabold px-5 py-3 rounded-xl text-xs transition"
                                             >
                                                 Cargar Caso de Estudio Integrado
                                             </button>
                                             <button 
-                                                onClick={() => setActiveTab('cazador')}
+                                                onClick={function() { setActiveTab('cazador'); }}
                                                 className="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-5 py-3 rounded-xl text-xs shadow-lg shadow-teal-500/10 transition"
                                             >
                                                 Ir al Creador Grounding
@@ -919,7 +1081,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                 )}
 
                                 {generatedPersona && (
-                                    <>
+                                    <React.Fragment>
                                         <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 text-lg sm:text-xl font-black">
@@ -993,7 +1155,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         </p>
                                                     </div>
                                                     <button 
-                                                        onClick={() => copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[1]) || computedLocalCopys.adDolor, "Copy de Anuncio")}
+                                                        onClick={function() { copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[1]) || computedLocalCopys.adDolor, "Copy de Anuncio"); }}
                                                         className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
                                                     >
                                                         Copiar Copy de Anuncio
@@ -1010,7 +1172,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         </p>
                                                     </div>
                                                     <button 
-                                                        onClick={() => copySpecificText(computedLocalCopys.emailDeseo, "Email de Secuencia")}
+                                                        onClick={function() { copySpecificText(computedLocalCopys.emailDeseo, "Email de Secuencia"); }}
                                                         className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
                                                     >
                                                         Copiar Email de Secuencia
@@ -1027,7 +1189,7 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                                         </p>
                                                     </div>
                                                     <button 
-                                                        onClick={() => copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[0]) || computedLocalCopys.landingPage, "Copy de Landing Page")}
+                                                        onClick={function() { copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[0]) || computedLocalCopys.landingPage, "Copy de Landing Page"); }}
                                                         className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
                                                     >
                                                         Copiar Copy de Landing
@@ -1041,23 +1203,23 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-pink-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué piensa y siente?</span>
-                                                    { (generatedPersona.que_piensa_y_siente && generatedPersona.que_piensa_y_siente.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
+                                                    { (generatedPersona.que_piensa_y_siente && generatedPersona.que_piensa_y_siente.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
                                                 </div>
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-indigo-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué ve?</span>
-                                                    { (generatedPersona.que_ve && generatedPersona.que_ve.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
+                                                    { (generatedPersona.que_ve && generatedPersona.que_ve.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
                                                 </div>
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-sky-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué oye?</span>
-                                                    { (generatedPersona.que_oye && generatedPersona.que_oye.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
+                                                    { (generatedPersona.que_oye && generatedPersona.que_oye.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
                                                 </div>
                                                 <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
                                                     <span className="text-emerald-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué dice y hace?</span>
-                                                    { (generatedPersona.que_dice_y_hace && generatedPersona.que_dice_y_hace.map((item, i) => <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>)) }
+                                                    { (generatedPersona.que_dice_y_hace && generatedPersona.que_dice_y_hace.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
                                                 </div>
                                             </div>
                                         </div>
-                                    </>
+                                    </React.Fragment>
                                 )}
                             </div>
                         )}
@@ -1087,15 +1249,17 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                             {momTestQuestions[simulatorState.currentQuestionIndex].context}
                                         </div>
                                         <div className="space-y-3">
-                                            {momTestQuestions[simulatorState.currentQuestionIndex].options.map((opt, i) => (
-                                                <button 
-                                                    key={i} 
-                                                    onClick={() => handleSimulateAnswer(opt)} 
-                                                    className="w-full text-left p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs sm:text-sm font-bold text-slate-200 transition flex justify-between items-center gap-2"
-                                                >
-                                                    <span>{opt.text}</span>
-                                                </button>
-                                            ))}
+                                            {momTestQuestions[simulatorState.currentQuestionIndex].options.map(function(opt, i) {
+                                                return (
+                                                    <button 
+                                                        key={i} 
+                                                        onClick={function() { handleSimulateAnswer(opt); }} 
+                                                        className="w-full text-left p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs sm:text-sm font-bold text-slate-200 transition flex justify-between items-center gap-2"
+                                                    >
+                                                        <span>{opt.text}</span>
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                         {simulatorState.showFeedback && (
                                             <div className={"p-4 rounded-xl border text-xs sm:text-sm leading-relaxed " + (simulatorState.feedbackType === 'buena' ? 'bg-emerald-950/25 border-emerald-500/20 text-emerald-300' : 'bg-rose-950/25 border-rose-500/20 text-rose-300')}>
@@ -1136,13 +1300,15 @@ ${generatedPersona.estrategia_marketing?.join('\n')}
                                     <p className="text-xs sm:text-sm text-slate-400">No tienes perfiles guardados de momento.</p>
                                 ) : (
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        {savedPersonas.map((persona) => (
-                                            <div key={persona.id} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
-                                                <h4 className="font-bold text-slate-200 text-sm">{persona.nombre}</h4>
-                                                <p className="text-xs text-slate-400">{persona.ocupacion}</p>
-                                                <button onClick={() => { setGeneratedPersona(persona); setActiveTab('mapa'); }} className="w-full bg-slate-900 hover:bg-slate-850 text-xs font-bold py-2.5 rounded-xl font-medium">Visualizar</button>
-                                            </div>
-                                        ))}
+                                        {savedPersonas.map(function(persona) {
+                                            return (
+                                                <div key={persona.id} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+                                                    <h4 className="font-bold text-slate-200 text-sm">{persona.nombre}</h4>
+                                                    <p className="text-xs text-slate-400">{persona.ocupacion}</p>
+                                                    <button onClick={function() { setGeneratedPersona(persona); setActiveTab('mapa'); }} className="w-full bg-slate-900 hover:bg-slate-850 text-xs font-bold py-2.5 rounded-xl font-medium">Visualizar</button>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </div>
