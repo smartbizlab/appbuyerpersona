@@ -4,15 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Constructor Científico de Buyer Persona</title>
-    <!-- Tailwind CSS Play CDN -->
+    <!-- Tailwind CSS Play CDN para renderizar estilos premium instantáneamente -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- React & ReactDOM CDNs estables via cdnjs (Cloudflare) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
-    <!-- Babel Standalone CDN estable via cdnjs (Cloudflare) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.21.4/babel.min.js" crossorigin></script>
-    
     <style>
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
@@ -23,644 +16,681 @@
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen">
-    
-    <div id="root"></div>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col antialiased font-sans">
 
-    <!-- Forzamos a Babel a compilar con presets estándar de ES6 y React -->
-    <script type="text/babel" data-presets="env,react">
-        const { useState, useEffect } = React;
-
-        // --- COMPONENTES DE ICONOS SVG INTEGRADOS (Ingeniería Defensiva para Babel) ---
-        const Compass = function(props) {
-            const className = props.className || "h-6 w-6";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-            );
-        };
-
-        const Brain = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2z"></path>
-                    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z"></path>
-                </svg>
-            );
-        };
-
-        const Eye = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-            );
-        };
-
-        const Volume2 = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
-            );
-        };
-
-        const MessageSquare = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-            );
-        };
-
-        const Activity = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                </svg>
-            );
-        };
-
-        const Smile = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                </svg>
-            );
-        };
-
-        const Sparkles = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707-.707M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"></path>
-                </svg>
-            );
-        };
-
-        const BookOpen = function(props) {
-            const className = props.className || "h-3.5 w-3.5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                </svg>
-            );
-        };
-
-        const Target = function(props) {
-            const className = props.className || "h-3.5 w-3.5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <circle cx="12" cy="12" r="6"></circle>
-                    <circle cx="12" cy="12" r="2"></circle>
-                </svg>
-            );
-        };
-
-        const Users = function(props) {
-            const className = props.className || "h-3.5 w-3.5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-            );
-        };
-
-        const HelpCircle = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-            );
-        };
-
-        const Check = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-            );
-        };
-
-        const Download = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-            );
-        };
-
-        const ArrowRight = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            );
-        };
-
-        const RotateCcw = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                    <polyline points="3 3 3 8 8 8"></polyline>
-                </svg>
-            );
-        };
-
-        const Trash2 = function(props) {
-            const className = props.className || "h-3.5 w-3.5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                </svg>
-            );
-        };
-
-        const Save = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                    <polyline points="7 3 7 8 15 8"></polyline>
-                </svg>
-            );
-        };
-
-        const UserIcon = function(props) {
-            const className = props.className || "h-4 w-4";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            );
-        };
-
-        const Play = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-            );
-        };
-
-        const Award = function(props) {
-            const className = props.className || "h-5 w-5";
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <circle cx="12" cy="8" r="7"></circle>
-                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                </svg>
-            );
-        };
-
-        // --- CONSTANTES GLOBALES DE CONFIGURACIÓN ---
-        const APP_TITLE = "Constructor Científico de Buyer Persona";
-        const APP_SUBTITLE = "Crea el perfil real de tu cliente ideal usando datos reales de internet en lugar de suposiciones.";
-        const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
-
-        function App() {
-            // Navegación
-            const [activeTab, setActiveTab] = useState('introduccion');
+    <!-- HEADER / NAV DE NAVEGACIÓN -->
+    <header class="bg-slate-950 border-b border-teal-500/20 py-4 px-4 sm:px-6 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 w-full lg:w-auto text-center lg:text-left justify-center lg:justify-start">
+                <div class="bg-gradient-to-tr from-teal-500 to-emerald-400 p-2 rounded-xl text-slate-950 shadow-lg shadow-teal-500/20 shrink-0">
+                    <!-- Icono Compass -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 sm:h-6 sm:w-6"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                        Constructor Científico de Buyer Persona
+                    </h1>
+                    <p class="text-[10px] sm:text-xs text-teal-400 font-semibold tracking-wide uppercase mt-0.5">
+                        Crea el perfil real de tu cliente ideal usando datos reales de internet en lugar de suposiciones.
+                    </p>
+                </div>
+            </div>
             
-            // Módulo 1: Sospechas del Usuario
-            const [suspectNeed, setSuspectNeed] = useState('');
-            const [suspectWho, setSuspectWho] = useState('');
-            const [suspectObstacle, setSuspectObstacle] = useState('');
+            <nav class="flex flex-wrap justify-center gap-1.5 p-1 bg-slate-900 rounded-xl border border-teal-500/10 w-full lg:w-auto">
+                <button data-tab="introduccion" class="flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all bg-teal-500 text-slate-950 shadow-md">
+                    <!-- Icono BookOpen -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 shrink-0"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    1. Metodología
+                </button>
+                <button data-tab="cazador" class="flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">
+                    <!-- Icono Target -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 shrink-0"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    2. Creador Grounding
+                </button>
+                <button data-tab="mapa" class="flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">
+                    <!-- Icono Brain -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 shrink-0"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z"></path></svg>
+                    3. Visualizador
+                </button>
+                <button data-tab="simulador" class="flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">
+                    <!-- Icono Users -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 shrink-0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    4. Mom Test Game
+                </button>
+                <button data-tab="ejemplos" class="flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">
+                    <!-- Icono Users -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 shrink-0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    Biblioteca (<span id="saved-count">0</span>)
+                </button>
+            </nav>
+        </div>
+    </header>
 
-            // Módulo 2: Captura Netnográfica (Grounding Data)
-            const [rawNetnography, setRawNetnography] = useState('');
-            const [netnoSource, setNetnoSource] = useState('Amazon');
+    <!-- NOTIFICACIONES TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-950 text-white text-xs font-extrabold py-3.5 px-6 rounded-xl shadow-2xl border border-teal-400 flex items-center gap-2 z-50 transition-all hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-teal-400 shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toast-text"></span>
+    </div>
 
-            // Módulo 3: Jobs-to-be-Done (JTBD)
-            const [jobFunctional, setJobFunctional] = useState('');
-            const [jobEmotional, setJobEmotional] = useState('');
-            const [jobSocial, setJobSocial] = useState('');
+    <!-- CONTENEDOR DE PANELES -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-            // Módulo 4: Configuración API & Generación
-            const [apiKey, setApiKey] = useState('');
-            const [isGenerating, setIsGenerating] = useState(false);
-            const [generatedPersona, setGeneratedPersona] = useState(null);
-            const [logError, setLogError] = useState('');
+        <!-- PANEL 1: METODOLOGÍA -->
+        <section data-panel="introduccion" class="space-y-6 sm:space-y-8 animate-fadeIn">
+            <div class="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-teal-400 shrink-0 mt-0.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                <div>
+                    <h4 class="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Módulo 1: Fundamentos Científicos</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Aprende por qué la mayoría de los emprendedores fallan al inventar a su cliente ideal y cómo la ciencia del marketing cualitativo resuelve este reto usando datos reales y empáticos.
+                    </p>
+                </div>
+            </div>
 
-            // Módulo 5: Historial y Persistencia Local
-            const [savedPersonas, setSavedPersonas] = useState([]);
-            const [toastMessage, setToastMessage] = useState('');
+            <div class="bg-gradient-to-br from-teal-950 via-slate-900 to-slate-950 p-6 md:p-10 rounded-3xl border border-teal-500/20 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                <div class="relative z-10 max-w-3xl space-y-4">
+                    <span class="bg-teal-500/20 text-teal-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border border-teal-500/30">
+                        Enfoque Científico Validado
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                        No adivines a tu cliente.<br />
+                        <span class="bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">Usa la IA como copiloto cualitativo.</span>
+                    </h2>
+                    <p class="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed">
+                        Las guías tradicionales te incitan a inventar un avatar ficticio con Inteligencia Artificial. Esta aplicación rompe ese sesgo y te obliga a utilizar la <strong>Netnografía</strong> de Robert Kozinets, el <strong>Mapa de Empatía</strong> de Dave Gray, la teoría <strong>Jobs-to-be-Done</strong> de Clayton Christensen (Harvard) y la validación de <strong>The Mom Test</strong>.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchTab('cazador')" class="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black px-5 py-3 rounded-xl shadow-lg hover:shadow-teal-500/20 transition flex items-center gap-2 text-xs">
+                            Ir al Creador Metodológico
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </button>
+                        <button onclick="loadPreset()" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-5 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2 text-xs">
+                            Ver un Ejemplo Listo (Anclaje Real)
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-            // Módulo 5 (Gamificado): Simulador "The Mom Test"
-            const [simulatorState, setSimulatorState] = useState({
-                currentQuestionIndex: 0,
-                score: 0,
-                showFeedback: false,
-                feedbackType: '',
-                feedbackText: '',
-                completed: false,
-                history: []
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-red-500/20 space-y-3">
+                    <h3 class="text-red-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 shrink-0 text-red-400"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        El Error del Comportamiento Sintético
+                    </h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Cuando pides a una IA que dibuje a un comprador ideal de la nada, obtienes un <strong>perfil sintético de asunciones</strong>. Basarás tus estrategias en dolores de mercado demasiado promedio (como "ahorrar tiempo") que tu competencia repite de forma idéntica, diluyendo tu ventaja competitiva.
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-emerald-500/20 space-y-3">
+                    <h3 class="text-emerald-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 shrink-0 text-emerald-400"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        La Solución: Copiloto Analítico con Grounding
+                    </h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Nuestra metodología te enseña a alimentar a la IA con <strong>Grounding Data</strong> (testimonios textuales y quejas de competidores de foros como Reddit o Quora). La IA se convierte en una potente analista semántica cualitativa.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 2: CREADOR GROUNDING -->
+        <section data-panel="cazador" class="space-y-6 sm:space-y-8 animate-fadeIn hidden">
+            <div class="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-teal-400 shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                <div>
+                    <h4 class="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">¿Qué es el Grounding?</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Consiste en "anclar" la Inteligencia Artificial a la realidad suministrándole quejas, testimonios y comentarios reales del mercado. Así, obligas a la tecnología a trabajar sobre datos empíricos reales en lugar de inventar estereotipos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-950 rounded-2xl border border-slate-800 p-5 sm:p-6 space-y-6">
+                <div class="border-b border-slate-800 pb-4">
+                    <h3 class="font-bold text-base sm:text-lg text-slate-200">Creador Metodológico de Grounding</h3>
+                </div>
+
+                <form id="form-grounding" class="space-y-6 text-xs">
+                    <div class="space-y-4">
+                        <span class="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 1: Tu Inventario de Sospechas (La P.U.V.)</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block text-slate-300 font-bold">1. ¿Qué problema o necesidad asumes que resuelves?</label>
+                                <input type="text" id="input-need" placeholder="Ej: Escribir textos de venta les toma días enteros de fatiga." class="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm" required />
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="block text-slate-300 font-bold">2. ¿A quién crees que se lo solucionas?</label>
+                                <input type="text" id="input-who" placeholder="Ej: Emprendedores digitales y consultores." class="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm" required />
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-slate-300 font-bold">3. ¿Qué objeción o miedo crees que impide comprar tu solución?</label>
+                            <input type="text" id="input-obstacle" placeholder="Ej: Temen sonar aburridos, robóticos o que la IA alucine." class="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm" />
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-slate-800">
+                        <span class="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 2: Datos Netnográficos Reales (Grounding Data)</span>
+                        <textarea id="input-netnography" placeholder="Pega testimonios literales o quejas de foros, Amazon, etc..." class="w-full h-32 bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 font-mono text-xs sm:text-sm" required></textarea>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-slate-800">
+                        <span class="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 3: Jobs-to-be-Done (La Motivación)</span>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block text-slate-300 font-bold">1. Job Funcional (Tarea técnica)</label>
+                                <input type="text" id="input-job-func" placeholder="Ej: Escribir copys rápido." class="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm" />
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="block text-slate-300 font-bold">2. Job Emocional (¿Cómo sentirse?)</label>
+                                <input type="text" id="input-job-emo" placeholder="Ej: Sentirme tranquilo con el tono." class="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm" />
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="block text-slate-300 font-bold">3. Job Social (¿Cómo ser percibido?)</label>
+                                <input type="text" id="input-job-soc" placeholder="Ej: Parecer experto y empático." class="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-slate-900 rounded-xl border border-teal-500/10 space-y-2">
+                        <label class="block text-slate-300 font-bold text-xs sm:text-sm">Gemini API Key (Opcional)</label>
+                        <input type="password" id="input-api-key" placeholder="Ingresa tu clave de API si tienes una..." class="w-full bg-slate-950 border border-slate-800 p-2 rounded-lg text-xs font-mono text-teal-300 focus:outline-none" />
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-between pt-2 border-t border-slate-800">
+                        <button type="button" onclick="copyMasterPrompt()" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-3 rounded-xl border border-slate-800 text-xs">
+                            Copiar Prompt C.R.I.C. Maestro
+                        </button>
+                        <button type="submit" id="btn-generate" class="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-6 py-3 rounded-xl text-xs flex items-center justify-center gap-2">
+                            <span id="btn-text">Generar con IA</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- PANEL 3: VISUALIZADOR -->
+        <section data-panel="mapa" class="space-y-6 sm:space-y-8 animate-fadeIn hidden">
+            <div class="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-teal-400 shrink-0 mt-0.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z"></path></svg>
+                <div>
+                    <h4 class="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Lienzo de Empatía & Copys</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Aquí visualizas la psicología del cliente ideal junto con los <strong>Ángulos de Ventas y Copys Generados</strong> en tiempo real a partir de tus datos cualitativos.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ESTADO VACÍO (EMPTY STATE) -->
+            <div id="visualizer-empty" class="bg-slate-950 border border-slate-800 rounded-3xl p-8 text-center space-y-6 max-w-xl mx-auto">
+                <div class="w-16 h-16 rounded-full bg-teal-500/10 text-teal-400 flex items-center justify-center mx-auto border border-teal-500/25">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z"></path></svg>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="text-lg sm:text-xl font-bold text-slate-100">Visualizador de Buyer Persona Vacío</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Aún no has introducido datos en tu creador ni has realizado un análisis cualitativo. Para ver la potencia de este framework interactivo, puedes cargar nuestra plantilla de ejemplo o ir al creador para rellenar tus propios datos de grounding.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+                    <button onclick="loadPreset()" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-extrabold px-5 py-3 rounded-xl text-xs transition">
+                        Cargar Caso de Estudio Integrado
+                    </button>
+                    <button onclick="switchTab('cazador')" class="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-5 py-3 rounded-xl text-xs shadow-lg shadow-teal-500/10 transition">
+                        Ir al Creador Grounding
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTENIDO GENERADO -->
+            <div id="visualizer-content" class="space-y-8 hidden">
+                <div class="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="flex items-center gap-4">
+                        <div id="persona-initial" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 text-lg sm:text-xl font-black">
+                            A
+                        </div>
+                        <div>
+                            <h2 id="persona-name" class="text-lg sm:text-xl font-bold text-slate-200">Nombre</h2>
+                            <p id="persona-meta" class="text-xs text-slate-400 mt-1">Ocupación • Edad</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button onclick="downloadPersonaTxt()" class="flex-1 sm:flex-none bg-slate-900 border border-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-xs">Descargar TXT</button>
+                        <button onclick="saveCurrentPersona()" class="flex-1 sm:flex-none bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs">Guardar Perfil</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 space-y-5">
+                        <h3 class="font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">Ficha Sociodemográfica</h3>
+                        <p id="persona-bio" class="text-xs sm:text-sm text-slate-300 bg-slate-900 p-4 rounded-xl border border-slate-800 leading-relaxed font-medium"></p>
+                        <div class="space-y-2 mt-2">
+                            <span class="text-slate-400 font-bold block text-[10px] uppercase tracking-wider">Hábitos de Compra:</span>
+                            <p id="persona-habits" class="text-xs text-slate-300 bg-slate-900 p-3 rounded-lg border border-slate-800 leading-relaxed font-medium"></p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 space-y-5">
+                        <h3 class="font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">Trabajos por Hacer (JTBD)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <span class="text-teal-400 font-extrabold text-[10px] uppercase">Funcional</span>
+                                <p id="jtbd-func" class="text-xs sm:text-sm text-slate-300 mt-1 font-medium"></p>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <span class="text-pink-400 font-extrabold text-[10px] uppercase">Emocional</span>
+                                <p id="jtbd-emo" class="text-xs sm:text-sm text-slate-300 mt-1 font-medium"></p>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <span class="text-indigo-400 font-extrabold text-[10px] uppercase">Social</span>
+                                <p id="jtbd-soc" class="text-xs sm:text-sm text-slate-300 mt-1 font-medium"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN COPYS PERSUASIVOS -->
+                <div class="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-teal-500/30 space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="font-extrabold text-teal-300 text-sm sm:text-base flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Ángulos de Ventas y Copys Generados
+                        </h3>
+                        <span class="text-[10px] bg-teal-500/10 text-teal-300 font-extrabold border border-teal-500/20 px-2.5 py-0.5 rounded-full">
+                            Copywriting Persuasivo
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        A continuación, tienes las plantillas y ángulos redactados de manera persuasiva con base en las frustraciones netnográficas que has ingresado en tu creador. ¡Listas para copiar y lanzar!
+                    </p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
+                        <!-- Card 1: Anuncio Dolor PAS -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-4">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-red-500/10 text-red-400 font-extrabold px-2 py-0.5 rounded-full border border-red-500/20">Fórmula PAS (Dolor)</span>
+                                <h4 class="font-bold text-slate-200 text-xs sm:text-sm">1. Copy para Redes o Anuncio</h4>
+                                <p id="copy-ad" class="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto"></p>
+                            </div>
+                            <button onclick="copySpecificText('copy-ad', 'Copy de Anuncio')" class="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10">
+                                Copiar Copy de Anuncio
+                            </button>
+                        </div>
+
+                        <!-- Card 2: Email Deseo Secuencia -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-4">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-pink-500/10 text-pink-400 font-extrabold px-2 py-0.5 rounded-full border border-pink-500/20">Email de Secuencia (JTBD)</span>
+                                <h4 class="font-bold text-slate-200 text-xs sm:text-sm">2. Email de Alta Conversión</h4>
+                                <p id="copy-email" class="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto"></p>
+                            </div>
+                            <button onclick="copySpecificText('copy-email', 'Email de Secuencia')" class="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10">
+                                Copiar Email de Secuencia
+                            </button>
+                        </div>
+
+                        <!-- Card 3: Landing Page Derribar Objeción -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-4">
+                            <div class="space-y-2">
+                                <span class="text-[9px] bg-indigo-500/10 text-indigo-400 font-extrabold px-2 py-0.5 rounded-full border border-indigo-500/20">Rompe-Objeción Principal</span>
+                                <h4 class="font-bold text-slate-200 text-xs sm:text-sm">3. Mensaje para Landing Page</h4>
+                                <p id="copy-landing" class="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto"></p>
+                            </div>
+                            <button onclick="copySpecificText('copy-landing', 'Copy de Landing Page')" class="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10">
+                                Copiar Copy de Landing
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAPA DE EMPATÍA -->
+                <div class="space-y-4">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-200">El Mapa de Empatía Científico</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                            <span class="text-pink-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué piensa y siente?</span>
+                            <div id="map-think" class="space-y-2"></div>
+                        </div>
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                            <span class="text-indigo-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué ve?</span>
+                            <div id="map-see" class="space-y-2"></div>
+                        </div>
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                            <span class="text-sky-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué oye?</span>
+                            <div id="map-hear" class="space-y-2"></div>
+                        </div>
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                            <span class="text-emerald-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué dice y hace?</span>
+                            <div id="map-say" class="space-y-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 4: SIMULADOR MOM TEST -->
+        <section data-panel="simulador" class="max-w-3xl mx-auto space-y-6 animate-fadeIn hidden">
+            <div class="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-teal-400 shrink-0 mt-0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <div>
+                    <h4 class="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">¿Qué es el Mom Test Game?</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Un simulador interactivo de validación de campo. Aprende a entrevistar clientes reales basándote en el libro "The Mom Test" para evitar opiniones falsas de cortesía.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 p-5 sm:p-6 rounded-3xl space-y-4">
+                <h3 class="font-extrabold text-base sm:text-lg text-slate-200">El Simulador "The Mom Test"</h3>
+                <p class="text-xs sm:text-sm text-slate-400">Valida tus hipótesis de cliente real con preguntas empíricas y evita los falsos positivos.</p>
+            </div>
+
+            <!-- SIMULADOR INTERACTIVO CONTAINER -->
+            <div id="simulator-game" class="bg-slate-950 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-6">
+                <!-- Se inyecta por JS -->
+            </div>
+        </section>
+
+        <!-- PANEL 5: BIBLIOTECA -->
+        <section data-panel="ejemplos" class="space-y-6 sm:space-y-8 animate-fadeIn hidden">
+            <div class="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-teal-400 shrink-0 mt-0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                <div>
+                    <h4 class="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Historial de Perfiles</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Tu base de datos local para guardar, comparar y consultar los arquetipos cualitativos validados que hayas creado.
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="text-lg sm:text-xl font-bold">Mis Buyer Personas Guardados</h3>
+            <div id="library-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Se inyecta por JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA PREMIUM -->
+    <footer class="bg-slate-950 border-t border-teal-500/10 py-8 px-4 sm:px-6 text-center text-slate-400 text-xs space-y-3">
+        <p class="max-w-2xl mx-auto leading-relaxed text-[11px] sm:text-xs">
+            Esta aplicación interactiva es un material de apoyo metodológico y práctico para lectores de la <strong>"Guía Científica y Práctica para Construir tu Buyer Persona con IA"</strong>.
+        </p>
+        <p class="text-teal-400 font-bold text-[10px] sm:text-xs uppercase tracking-wider">
+            Desarrollado por <a href="https://rodolfobuitrago.com" target="_blank" rel="noopener noreferrer" class="hover:underline text-teal-300 font-extrabold transition-all">Rodolfo Buitrago</a>
+        </p>
+        <p class="text-slate-500 text-[10px] sm:text-[11px]">
+            Visita <a href="https://rodolfobuitrago.com" target="_blank" rel="noopener noreferrer" class="text-teal-400 hover:underline hover:text-teal-300 font-bold">rodolfobuitrago.com</a> para acceder a más herramientas y programas de entrenamiento de IA aplicados a ventas.
+        </p>
+    </footer>
+
+    <!-- LOGICA DE CONTROL EN VANILLA JS DE ALTA ROBUSTEZ (SIN BABEL, SIN REACT) -->
+    <script>
+        // --- ESTADO CENTRAL ---
+        const state = {
+            activeTab: 'introduccion',
+            suspectNeed: '',
+            suspectWho: '',
+            suspectObstacle: '',
+            rawNetnography: '',
+            netnoSource: 'Amazon',
+            jobFunctional: '',
+            jobEmotional: '',
+            jobSocial: '',
+            apiKey: '',
+            generatedPersona: null,
+            savedPersonas: [],
+            // Simulador "The Mom Test"
+            currentQuestionIndex: 0,
+            score: 0,
+            showFeedback: false,
+            feedbackType: '',
+            feedbackText: '',
+            completed: false,
+            history: []
+        };
+
+        // --- PRESETS ---
+        const presets = [
+            {
+                id: "preset-copy-ia",
+                title: "Asistente de Redacción (Nicho: Emprendedores)",
+                suspectNeed: "Escribir correos y páginas de venta consume demasiado tiempo y no logran textos persuasivos.",
+                suspectWho: "Emprendedores digitales y creadores de contenido.",
+                suspectObstacle: "Temor a que los textos generados por IA suenen genéricos y fríos.",
+                netnoSource: "Reddit",
+                rawNetnography: "Comentario en Reddit (Comunidad Startups_ES):\n'Llevo toda la tarde intentando escribir la secuencia de correos para lanzar mi servicio. Siento que tengo el síndrome de la hoja en blanco constante. ChatGPT me da textos súper repetitivos que gritan 'fui escrito por una máquina', me da pena mandar eso a mi base de datos. Al final termino escribiendo yo mismo pero tardo días enteros en un solo correo y postergo las ventas porque me da pánico no convencer.'",
+                jobFunctional: "Escribir secuencias de correos comerciales persuasivos con rapidez.",
+                jobEmotional: "Eliminar la frustración de la hoja en blanco y la fatiga creativa.",
+                jobSocial: "Mantener una imagen altamente profesional y empática frente a sus suscriptores sin parecer spam.",
+                mockData: {
+                    nombre: "Alejandro Ruiz",
+                    edad: "33 años",
+                    ocupacion: "Mentor de Negocios y Creador de Contenido Digital",
+                    ingresos: "USD 1,800 - 3,000 mensuales",
+                    ubicacion: "Guadalajara, México (Trabaja 100% online)",
+                    resumen_perfil: "Alejandro es un profesional que vende consultoría y talleres. Es experto en su área de negocios, pero no tiene formación de copywriter. Siente una constante presión por crear contenido y enviar correos de venta frecuentes, lo que le genera fatiga mental. Detesta los automatismos genéricos pero está saturado por la cantidad de tareas manuales.",
+                    comportamiento_compra: "Busca activamente tutoriales prácticos de copywriter. Compra herramientas si le prometen soluciones personalizadas que respeten la voz de su marca. Investiga opiniones en comunidades antes de registrarse.",
+                    que_ve: [
+                        "Otros mentores en Instagram publicando constantemente copys impecables.",
+                        "Tutoriales de IA prometiendo 'escribir en 1 segundo' pero que al probarlos dan resultados vacíos.",
+                        "Tasas de conversión bajas en sus correos si no dedica suficiente tiempo a redactarlos."
+                    ],
+                    que_oye: [
+                        "Expertos diciendo: 'El email marketing es la herramienta que más convierte'.",
+                        "Colegas quejándose de que el spam de IA está arruinando la bandeja de entrada.",
+                        "Su audiencia pidiendo contenidos que no se sientan robóticos ni invasivos."
+                    ],
+                    que_piensa_y_siente: [
+                        "Miedo a perder el respeto y la confianza de su comunidad si envía correos fríos.",
+                        "Frustración de gastar horas de esfuerzo en redactar textos que no generan respuestas ni ventas.",
+                        "Deseo de tener un asistente que entienda su estilo de escritura y haga el 80% del trabajo pesado."
+                    ],
+                    que_dice_y_hace: [
+                        "Intenta utilizar prompts simples en IA, pero los descarta porque suenan muy artificiales.",
+                        "Posterga la redacción de correos hasta el último minuto por pereza y frustración.",
+                        "Dice en redes sociales que escribir es fácil, pero en privado confiesa que le drena la energía."
+                    ],
+                    dolores: [
+                        "El 'síndrome de la hoja en blanco' al diseñar ofertas comerciales.",
+                        "Textos mecánicos generados por IA genérica que destruyen el engagement de su lista.",
+                        "Saturación de tiempo operativo en marketing en detrimento de la atención a sus alumnos."
+                    ],
+                    alegrias: [
+                        "Estructurar un correo altamente persuasivo en solo 10 minutos usando una IA entrenada.",
+                        "Saber que sus textos se leen naturales, humanos y alineados a su tono de voz personal.",
+                        "Recibir respuestas de su audiencia diciendo: 'Este correo parece escrito exactamente para mí'."
+                    ],
+                    estrategia_marketing: [
+                        "Ángulo de Venta: 'La IA no te reemplaza, escala tu tono humano. Crea asistentes que copien tu estilo y eliminen la hoja en blanco'.",
+                        "Mensaje Gancho: 'Deja de enviar correos robóticos que van directo a spam. Entrena un asistente de IA con tu propia voz y redacta ofertas que generen ventas en 10 minutos.'",
+                        "Canal Primario: Demostraciones prácticas en video tipo tutorial donde se vea la diferencia de un texto crudo vs uno anclado."
+                    ],
+                    jobs_desglose: {
+                        funcional: "Redactar correos comerciales eficientes y persuasivos.",
+                        emocional: "Aliviar el estrés de la hoja en blanco y la fatiga operativa.",
+                        social: "Ser percibido como una marca empática y experta ante su comunidad."
+                    }
+                }
+            }
+        ];
+
+        // --- PREGUNTAS SIMULADOR ---
+        const momTestQuestions = [
+            {
+                context: "Te encuentras con Carlos, un potencial cliente que coincide con tu hipótesis. Quieres saber si compraría un software que automatiza la redacción de correos electrónicos de venta con IA.",
+                options: [
+                    {
+                        text: "¿Comprarías una aplicación de IA que te ahorre 5 horas a la semana escribiendo correos comerciales?",
+                        type: "sesgada",
+                        score: 0,
+                        response: "Carlos sonríe educadamente y dice: '¡Sí, claro! Suena genial y muy útil, avísame cuando esté listo'.",
+                        feedback: "⚠️ ¡FALSO POSITIVO! Esta es una pregunta predictiva y de opinión. La gente es complaciente por educación, pero esto no garantiza que pagarán un solo dólar cuando lances el producto."
+                    },
+                    {
+                        text: "Cuéntame, ¿cómo redactaste tus últimos correos de venta y cuánto tiempo te tomó ese proceso la semana pasada?",
+                        type: "buena",
+                        score: 30,
+                        response: "Carlos suspira: 'El martes pasé 4 horas frente a la pantalla intentando redactar tres correos. Terminé exhausto y copié una plantilla genérica que vi en un blog porque no sabía qué más poner'.",
+                        feedback: "✓ ¡EXCELENTE PREGUNTA! Hablas del pasado concreto, no de hipótesis futuras. Descubriste un dolor real de tiempo y el síntoma del 'síndrome de la hoja en blanco'."
+                    }
+                ]
+            },
+            {
+                context: "Quieres descubrir si el presupuesto de tu cliente ideal es un obstáculo real o si el problema es lo suficientemente doloroso para pagar.",
+                options: [
+                    {
+                        text: "¿Estarías dispuesto a pagar una suscripción mensual de $29 dólares por una herramienta de este tipo?",
+                        type: "sesgada",
+                        score: 0,
+                        response: "Carlos duda un momento y responde: 'Bueno, supongo que si la herramienta funciona bien y de verdad me convence, no tendría problema en pagarlo...'.",
+                        feedback: "⚠️ ¡PREGUNTA TRAPA! Las personas mienten sobre sus presupuestos futuros teóricos. No midas promesas de pago; busca comportamientos pasados."
+                    },
+                    {
+                        text: "¿Cuánto dinero o tiempo has gastado en el último mes intentando resolver este problema de redacción?",
+                        type: "buena",
+                        score: 30,
+                        response: "Carlos confiesa: 'Compré un libro de copy en Amazon de $15 dólares que no terminé, y el mes pasado le pagué $100 dólares a un redactor freelance para una campaña, pero no me gustaron los textos'.",
+                        feedback: "✓ ¡APROBADA POR EL MOM TEST! Carlos ya está gastando dinero y tiempo activamente para solucionar su problema. Es un cliente que siente el dolor de forma urgente."
+                    }
+                ]
+            },
+            {
+                context: "Quieres validar si el cliente confía en la Inteligencia Artificial o si tiene miedos y objeciones que bloquearán tu venta.",
+                options: [
+                    {
+                        text: "¿Crees que la inteligencia artificial escribe de forma profesional o te preocupa que aleje a tus clientes?",
+                        type: "sesgada",
+                        score: 0,
+                        response: "Carlos dice: 'Mmm, supongo que la tecnología avanza rápido, así que debe de escribir bien, ¿no?'.",
+                        feedback: "⚠️ ¡OPINIÓN GENÉRICA! Carlos te da su opinión general sobre la tecnología, no su preocupación real o un caso específico que él haya vivido."
+                    },
+                    {
+                        text: "¿Has intentado usar alguna vez ChatGPT o herramientas similares para escribir tus contenidos? ¿Qué ocurrió cuando lo hiciste?",
+                        type: "buena",
+                        score: 40,
+                        response: "Carlos gesticula con frustración: 'Sí, lo intenté el mes pasado. Le pedí un correo de venta pero los textos me parecieron súper fríos, artificiales y repetitivos. Me dio vergüenza usarlos y borré todo'.",
+                        feedback: "✓ ¡MINA DE ORO CUALITATIVA! Descubriste la barrera mental exacta de tu cliente: teme sonar artificial y perder credibilidad. Ya sabes qué objeción debes responder en tu marketing."
+                    }
+                ]
+            }
+        ];
+
+        // --- INICIALIZACIÓN ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Cargar datos locales de persistencia
+            const stored = localStorage.getItem('scientific_buyer_personas');
+            if (stored) {
+                try { state.savedPersonas = JSON.parse(stored); } catch (e) { console.error(e); }
+            }
+            updateSavedCount();
+            renderSimulador();
+            renderBiblioteca();
+
+            // Configurar Listeners de Pestañas
+            document.querySelectorAll('[data-tab]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
             });
 
-            // Base de datos de preguntas para el Simulador
-            const momTestQuestions = [
-                {
-                    context: "Te encuentras con Carlos, un potencial cliente que coincide con tu hipótesis. Quieres saber si compraría un software que automatiza la redacción de correos electrónicos de venta con IA.",
-                    options: [
-                        {
-                            text: "¿Comprarías una aplicación de IA que te ahorre 5 horas a la semana escribiendo correos comerciales?",
-                            type: "sesgada",
-                            score: 0,
-                            response: "Carlos sonríe educadamente y dice: '¡Sí, claro! Suena genial y muy útil, avísame cuando esté listo'.",
-                            feedback: "⚠️ ¡FALSO POSITIVO! Esta es una pregunta predictiva y de opinión. La gente es complaciente por educación, pero esto no garantiza que pagarán un solo dólar cuando lances el producto."
-                        },
-                        {
-                            text: "Cuéntame, ¿cómo redactaste tus últimos correos de venta y cuánto tiempo te tomó ese proceso la semana pasada?",
-                            type: "buena",
-                            score: 30,
-                            response: "Carlos suspira: 'El martes pasé 4 horas frente a la pantalla intentando redactar tres correos. Terminé exhausto y copié una plantilla genérica que vi en un blog porque no sabía qué más poner'.",
-                            feedback: "✓ ¡EXCELENTE PREGUNTA! Hablas del pasado concreto, no de hipótesis futuras. Descubriste un dolor real de tiempo y el síntoma del 'síndrome de la hoja en blanco'."
-                        }
-                    ]
-                },
-                {
-                    context: "Quieres descubrir si el presupuesto de tu cliente ideal es un obstáculo real o si el problema es lo suficientemente doloroso para pagar.",
-                    options: [
-                        {
-                            text: "¿Estarías dispuesto a pagar una suscripción mensual de $29 dólares por una herramienta de este tipo?",
-                            type: "sesgada",
-                            score: 0,
-                            response: "Carlos duda un momento y responde: 'Bueno, supongo que si la herramienta funciona bien y de verdad me convence, no tendría problema en pagarlo...'.",
-                            feedback: "⚠️ ¡PREGUNTA TRAPA! Las personas mienten sobre sus presupuestos futuros teóricos. No midas promesas de pago; busca comportamientos pasados."
-                        },
-                        {
-                            text: "¿Cuánto dinero o tiempo has gastado en el último mes intentando resolver este problema de redacción?",
-                            type: "buena",
-                            score: 30,
-                            response: "Carlos confiesa: 'Compré un libro de copy en Amazon de $15 dólares que no terminé, y el mes pasado le pagué $100 dólares a un redactor freelance para una campaña, pero no me gustaron los textos'.",
-                            feedback: "✓ ¡APROBADA POR EL MOM TEST! Carlos ya está gastando dinero y tiempo activamente para solucionar su problema. Es un cliente que siente el dolor de forma urgente."
-                        }
-                    ]
-                },
-                {
-                    context: "Quieres validar si el cliente confía en la Inteligencia Artificial o si tiene miedos y objeciones que bloquearán tu venta.",
-                    options: [
-                        {
-                            text: "¿Crees que la inteligencia artificial escribe de forma profesional o te preocupa que aleje a tus clientes?",
-                            type: "sesgada",
-                            score: 0,
-                            response: "Carlos dice: 'Mmm, supongo que la tecnología avanza rápido, así que debe de escribir bien, ¿no?'.",
-                            feedback: "⚠️ ¡OPINIÓN GENÉRICA! Carlos te da su opinión general sobre la tecnología, no su preocupación real o un caso específico que él haya vivido."
-                        },
-                        {
-                            text: "¿Has intentado usar alguna vez ChatGPT o herramientas similares para escribir tus contenidos? ¿Qué ocurrió cuando lo hiciste?",
-                            type: "buena",
-                            score: 40,
-                            response: "Carlos gesticula con frustración: 'Sí, lo intenté el mes pasado. Le pedí un correo de venta pero los textos me parecieron súper fríos, artificiales y repetitivos. Me dio vergüenza usarlos y borré todo'.",
-                            feedback: "✓ ¡MINA DE ORO CUALITATIVA! Descubriste la barrera mental exacta de tu cliente: teme sonar artificial y perder credibilidad. Ya sabes qué objeción debes responder en tu marketing."
-                        }
-                    ]
+            // Listener de Formulario
+            const form = document.getElementById('form-grounding');
+            form.addEventListener('submit', handleFormSubmit);
+        });
+
+        // --- NAVEGACIÓN ---
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+
+            // Actualizar botones Nav
+            document.querySelectorAll('[data-tab]').forEach(btn => {
+                const id = btn.getAttribute('data-tab');
+                if (id === tabId) {
+                    btn.className = "flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all bg-teal-500 text-slate-950 shadow-md";
+                } else {
+                    btn.className = "flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200";
                 }
-            ];
+            });
 
-            // Presets de prueba
-            const presets = [
-                {
-                    id: "preset-copy-ia",
-                    title: "Asistente de Redacción (Nicho: Emprendedores)",
-                    suspectNeed: "Escribir correos y páginas de venta consume demasiado tiempo y no logran textos persuasivos.",
-                    suspectWho: "Emprendedores digitales y creadores de contenido.",
-                    suspectObstacle: "Temor a que los textos generados por IA suenen genéricos y fríos.",
-                    netnoSource: "Reddit",
-                    rawNetnography: "Comentario en Reddit (Comunidad Startups_ES):\n'Llevo toda la tarde intentando escribir la secuencia de correos para lanzar mi servicio. Siento que tengo el síndrome de la hoja en blanco constante. ChatGPT me da textos súper repetitivos que gritan 'fui escrito por una máquina', me da pena mandar eso a mi base de datos. Al final termino escribiendo yo mismo pero tardo días enteros en un solo correo y postergo las ventas porque me da pánico no convencer.'",
-                    jobFunctional: "Escribir secuencias de correos comerciales persuasivos con rapidez.",
-                    jobEmotional: "Eliminar la frustración de la hoja en blanco y la fatiga creativa.",
-                    jobSocial: "Mantener una imagen altamente profesional y empática frente a sus suscriptores sin parecer spam.",
-                    mockData: {
-                        nombre: "Alejandro Ruiz",
-                        edad: "33 años",
-                        ocupacion: "Mentor de Negocios y Creador de Contenido Digital",
-                        ingresos: "USD 1,800 - 3,000 mensuales",
-                        ubicacion: "Guadalajara, México (Trabaja 100% online)",
-                        resumen_perfil: "Alejandro es un profesional que vende consultoría y talleres. Es experto en su área de negocios, pero no tiene formación de copywriter. Siente una constante presión por crear contenido y enviar correos de venta frecuentes, lo que le genera fatiga mental. Detesta los automatismos genéricos pero está saturado por la cantidad de tareas manuales.",
-                        comportamiento_compra: "Busca activamente tutoriales prácticos de copywriter. Compra herramientas si le prometen soluciones personalizadas que respeten la voz de su marca. Investiga opiniones en comunidades antes de registrarse.",
-                        que_ve: [
-                            "Otros mentores en Instagram publicando constantemente copys impecables.",
-                            "Tutoriales de IA prometiendo 'escribir en 1 segundo' pero que al probarlos dan resultados vacíos.",
-                            "Tasas de conversión bajas en sus correos si no dedica suficiente tiempo a redactarlos."
-                        ],
-                        que_oye: [
-                            "Expertos diciendo: 'El email marketing es la herramienta que más convierte'.",
-                            "Colegas quejándose de que el spam de IA está arruinando la bandeja de entrada.",
-                            "Su audiencia pidiendo contenidos que no se sientan robóticos ni invasivos."
-                        ],
-                        que_piensa_y_siente: [
-                            "Miedo a perder el respeto y la confianza de su comunidad si envía correos fríos.",
-                            "Frustración de gastar horas de esfuerzo en redactar textos que no generan respuestas ni ventas.",
-                            "Deseo de tener un asistente que entienda su estilo de escritura y haga el 80% del trabajo pesado."
-                        ],
-                        que_dice_y_hace: [
-                            "Intenta utilizar prompts simples en IA, pero los descarta porque suenan muy artificiales.",
-                            "Posterga la redacción de correos hasta el último minuto por pereza y frustración.",
-                            "Dice en redes sociales que escribir es fácil, pero en privado confiesa que le drena la energía."
-                        ],
-                        dolores: [
-                            "El 'síndrome de la hoja en blanco' al diseñar ofertas comerciales.",
-                            "Textos mecánicos generados por IA genérica que destruyen el engagement de su lista.",
-                            "Saturación de tiempo operativo en marketing en detrimento de la atención a sus alumnos."
-                        ],
-                        alegrias: [
-                            "Estructurar un correo altamente persuasivo en solo 10 minutos usando una IA entrenada.",
-                            "Saber que sus textos se leen naturales, humanos y alineados a su tono de voz personal.",
-                            "Recibir respuestas de su audiencia diciendo: 'Este correo parece escrito exactamente para mí'."
-                        ],
-                        estrategia_marketing: [
-                            "Ángulo de Venta: 'La IA no te reemplaza, escala tu tono humano. Crea asistentes que copien tu estilo y eliminen la hoja en blanco'.",
-                            "Mensaje Gancho: 'Deja de enviar correos robóticos que van directo a spam. Entrena un asistente de IA con tu propia voz y redacta ofertas que generen ventas en 10 minutos.'",
-                            "Canal Primario: Demostraciones prácticas en video tipo tutorial donde se vea la diferencia de un texto crudo vs uno anclado."
-                        ],
-                        jobs_desglose: {
-                            funcional: "Redactar correos comerciales eficientes y persuasivos.",
-                            emocional: "Aliviar el estrés de la hoja en blanco y la fatiga operativa.",
-                            social: "Ser percibido como una marca empática y experta ante su comunidad."
-                        }
-                    }
+            // Mostrar/Ocultar Paneles
+            document.querySelectorAll('[data-panel]').forEach(panel => {
+                const id = panel.getAttribute('data-panel');
+                if (id === tabId) {
+                    panel.classList.remove('hidden');
+                    panel.classList.add('animate-fadeIn');
+                } else {
+                    panel.classList.add('hidden');
+                    panel.classList.remove('animate-fadeIn');
                 }
-            ];
+            });
 
-            // Persistencia
-            useEffect(() => {
-                const stored = localStorage.getItem('scientific_buyer_personas');
-                if (stored) {
-                    try { setSavedPersonas(JSON.parse(stored)); } catch (e) { console.error(e); }
-                }
-            }, []);
+            // Acciones especiales al entrar a cada pestaña
+            if (tabId === 'mapa') {
+                renderVisualizer();
+            }
+            if (tabId === 'ejemplos') {
+                renderBiblioteca();
+            }
+        }
 
-            const triggerToast = (msg) => {
-                setToastMessage(msg);
-                setTimeout(() => setToastMessage(''), 3000);
-            };
+        // --- TOAST NOTIFICATIONS ---
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const text = document.getElementById('toast-text');
+            text.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
 
-            const savePersona = () => {
-                if (!generatedPersona) return;
-                const isSaved = savedPersonas.some(p => p.nombre === generatedPersona.nombre);
-                if (isSaved) {
-                    triggerToast("Este perfil ya se encuentra en tu biblioteca.");
-                    return;
-                }
-                const updated = [...savedPersonas, { ...generatedPersona, id: Date.now() }];
-                setSavedPersonas(updated);
-                localStorage.setItem('scientific_buyer_personas', JSON.stringify(updated));
-                triggerToast("¡Buyer Persona guardado exitosamente!");
-            };
+        function updateSavedCount() {
+            document.getElementById('saved-count').innerText = state.savedPersonas.length;
+        }
 
-            const deletePersona = (id) => {
-                const updated = savedPersonas.filter(p => p.id !== id);
-                setSavedPersonas(updated);
-                localStorage.setItem('scientific_buyer_personas', JSON.stringify(updated));
-                triggerToast("Perfil eliminado con éxito.");
-            };
+        // --- CARGAR PRESETS ---
+        function loadPreset() {
+            const pr = presets[0];
+            document.getElementById('input-need').value = pr.suspectNeed;
+            document.getElementById('input-who').value = pr.suspectWho;
+            document.getElementById('input-obstacle').value = pr.suspectObstacle;
+            document.getElementById('input-netnography').value = pr.rawNetnography;
+            document.getElementById('input-job-func').value = pr.jobFunctional;
+            document.getElementById('input-job-emo').value = pr.jobEmotional;
+            document.getElementById('input-job-soc').value = pr.jobSocial;
 
-            const handleLoadPreset = (preset) => {
-                setSuspectNeed(preset.suspectNeed);
-                setSuspectWho(preset.suspectWho);
-                setSuspectObstacle(preset.suspectObstacle);
-                setNetnoSource(preset.netnoSource);
-                setRawNetnography(preset.rawNetnography);
-                setJobFunctional(preset.jobFunctional);
-                setJobEmotional(preset.jobEmotional);
-                setJobSocial(preset.jobSocial);
-                setGeneratedPersona(preset.mockData);
-                setActiveTab('mapa');
-                triggerToast("Preset cargado. Datos de Grounding listos.");
-            };
+            state.generatedPersona = pr.mockData;
+            switchTab('mapa');
+            showToast("Ejemplo cargado de forma exitosa.");
+        }
 
-            const generateWithIA = async (e) => {
-                e.preventDefault();
-                if (!suspectNeed || !suspectWho || !rawNetnography) {
-                    triggerToast("Completa la PUV y los Datos Netnográficos del Módulo 2.");
-                    return;
-                }
+        // --- COPIAR PROMPT MAESTRO ---
+        function copyMasterPrompt() {
+            const need = document.getElementById('input-need').value || "[Problema Principal]";
+            const who = document.getElementById('input-who').value || "[Público Objetivo]";
+            const obstacle = document.getElementById('input-obstacle').value || "[Objeción o Miedo]";
+            const raw = document.getElementById('input-netnography').value || "[Testimonios Netnográficos]";
+            const f = document.getElementById('input-job-func').value || "[Job Funcional]";
+            const em = document.getElementById('input-job-emo').value || "[Job Emocional]";
+            const soc = document.getElementById('input-job-soc').value || "[Job Social]";
 
-                setIsGenerating(true);
-                setLogError('');
-
-                const promptCric = `
-                  # CONTEXTO
-                  Estoy construyendo un Buyer Persona científico basado en datos cualitativos reales (Netnografía).
-                  Propuesta Única de Valor (PUV):
-                  - Problema supuesto a solucionar: "${suspectNeed}"
-                  - Público inicial supuesto: "${suspectWho}"
-                  - Objeción supuesta: "${suspectObstacle}"
-
-                  Información cualitativa real recopilada en comunidades virtuales (Netnografía / Grounding Data):
-                  - Origen de datos: ${netnoSource}
-                  - Testimonios crudos recogidos:
-                  """
-                  ${rawNetnography}
-                  """
-
-                  Framework de Jobs-to-be-Done (Suministrado por el usuario):
-                  - Job Funcional: "${jobFunctional}"
-                  - Job Emocional: "${jobEmotional}"
-                  - Job Social: "${jobSocial}"
-
-                  # ROL
-                  Actúa como un Investigador de Experiencia de Usuario (UX Researcher) senior, antropólogo digital y experto en el framework "Jobs-to-be-Done" de Clayton Christensen y el Mapa de Empatía de Dave Gray.
-
-                  # INSTRUCCIONES
-                  1. Analiza detenidamente los testimonios y quejas que te he suministrado en el Contexto.
-                  2. Genera un objeto JSON que estructure detalladamente el perfil del Buyer Persona fidedigno.
-                  3. El arquetipo debe tener un nombre representativo, edad coherente con los testimonios, ocupación y nivel de ingresos estimado de forma realista.
-                  4. El Mapa de Empatía debe estar basado ÚNICAMENTE en las deducciones lógicas de la "Grounding Data" suministrada. Genera 3 elementos descriptivos para cada cuadrante (ve, oye, piensa_siente, dice_hace, dolores, alegrias).
-                  5. Entrega una sección de "jobs_desglose" desglosando las dimensiones funcional, emocional y social del Job principal.
-                  6. Entrega 3 recomendaciones estratégicas de marketing (Ángulos de venta persuasivos que respondan directamente a las quejas reales de la Netnografía).
-
-                  # CONSTRECCIONES
-                  - Está estrictamente prohibido que inventes dolores o comportamientos de compra que no estén fundamentados en la "Grounding Data" provista.
-                  - Evita los clichés genéricos de marketing de internet.
-                  - Debes devolver la respuesta estrictamente en un formato JSON válido que coincida con el esquema solicitado, sin decoradores markdown como \`\`\`json ni texto introductorio.
-
-                  Esquema de respuesta JSON esperado:
-                  {
-                    "nombre": "Nombre Ficticio",
-                    "edad": "Edad aproximada",
-                    "ocupacion": "Ocupación coherente",
-                    "ingresos": "Rango de ingresos estimado",
-                    "ubicacion": "Ubicación realista",
-                    "resumen_perfil": "Texto descriptivo biográfico empático de 3 líneas",
-                    "comportamiento_compra": "Texto descriptivo de sus hábitos de compra reales según los testimonios",
-                    "que_ve": ["Ver 1", "Ver 2", "Ver 3"],
-                    "que_oye": ["Oír 1", "Oír 2", "Oír 3"],
-                    "que_piensa_y_siente": ["Pensar 1", "Pensar 2", "Pensar 3"],
-                    "que_dice_y_hace": ["Dice 1", "Dice 2", "Dice 3"],
-                    "dolores": ["Dolor 1", "Dolor 2", "Dolor 3"],
-                    "alegrias": ["Alegría 1", "Alegría 2", "Alegría 3"],
-                    "estrategia_marketing": ["Estrategia 1", "Estrategia 2", "Estrategia 3"],
-                    "jobs_desglose": {
-                      "funcional": "Job funcional estructurado",
-                      "emocional": "Job emocional estructurado",
-                      "social": "Job social estructurado"
-                    }
-                  }
-                `;
-
-                try {
-                    const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: promptCric }] }]
-                        })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Error en el servidor de IA (${response.status}). Asegúrate de ingresar una API Key válida.`);
-                    }
-
-                    const data = await response.json();
-                    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                    const sanitizedText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
-                    const parsedData = JSON.parse(sanitizedText);
-                    
-                    setGeneratedPersona(parsedData);
-                    setActiveTab('mapa');
-                    triggerToast("¡Buyer Persona Científico generado de manera exitosa!");
-                } catch (err) {
-                    console.error(err);
-                    setLogError(err.message || "Error al procesar la respuesta.");
-                    
-                    // Fallback local robusto (Simulador de análisis)
-                    setTimeout(() => {
-                        const localFallback = {
-                            nombre: suspectWho.split(' ')[0] ? `${suspectWho.split(' ')[0]} Validado` : "Persona de Grounding",
-                            edad: "27 - 45 años",
-                            ocupacion: suspectWho || "Profesional del Área",
-                            ingresos: "Acorde a perfil profesional",
-                            ubicacion: "Hispanoamérica (Digital)",
-                            resumen_perfil: `Este perfil representa a un usuario frustrado por la problemática de: "${suspectNeed}". El análisis netnográfico de los comentarios revela que ha intentado otras alternativas pero las descartó por sonar artificiales o ser complejas.`,
-                            comportamiento_compra: "Busca activamente valoraciones e investiga en foros y comentarios de YouTube antes de realizar una inversión. Prefiere un periodo de prueba o ejemplos visuales claros antes de comprar.",
-                            que_ve: [
-                                "Anuncios y herramientas automatizadas prometiendo milagros rápidos.",
-                                "Colegas y competidores que parecen optimizar su trabajo diario con metodologías modernas.",
-                                "Muchos contenidos genéricos y repetitivos en su bandeja de entrada."
-                            ],
-                            que_oye: [
-                                "Consejos de referentes diciendo que debe sistematizar sus tareas repetitivas para escalar.",
-                                "Críticas de su comunidad de que muchas ofertas en redes sociales se sienten como spam robótico.",
-                                "Colegas recomendando enfocarse en la diferenciación y la calidad humana."
-                            ],
-                            que_piensa_y_siente: [
-                                `Inquietud por no resolver eficazmente: "${suspectNeed}".`,
-                                "Deseo de diferenciarse en el mercado y no verse como una marca genérica.",
-                                `Esperanza de encontrar un método claro y práctico que le permita escalar sin fatiga mental.`
-                            ],
-                            que_dice_y_hace: [
-                                "Dice en foros que busca plantillas y metodologías prácticas listas para usar.",
-                                "Intenta configurar flujos empíricamente pero se frustra en los detalles técnicos.",
-                                "Prefiere delegar o automatizar si percibe que el resultado mantiene la calidad empática."
-                            ],
-                            dolores: [
-                                `El atasco operativo y el estrés generado por: "${suspectNeed}".`,
-                                "Que las herramientas automáticas entreguen un resultado robótico e impersonal.",
-                                "Perder tiempo y dinero en tutoriales teóricos sin un paso a paso aplicable de inmediato."
-                            ],
-                            alegrias: [
-                                "Resolver el problema de forma ágil preservando su voz y calidad profesional.",
-                                "Optimizar sus flujos ahorrando hasta un 75% del tiempo que gastaba en tareas manuales.",
-                                "Sentir el alivio mental y la tranquilidad de tener el control sobre su estrategia comercial."
-                            ],
-                            estrategia_marketing: [
-                                `Ángulo de Venta: Centrar la comunicación en evitar el dolor del atasco y la hoja en blanco, entregando plantillas o metodologías de rápida ejecución.`,
-                                `Mensaje Gancho: 'No más respuestas genéricas ni fatiga mental. Conoce el método paso a paso que te permite solucionar ${suspectNeed.slice(0, 45)}... manteniendo tu esencia profesional.'`,
-                                "Canal Recomendado: Campañas de contenido educativo que muestren el proceso paso a paso, eliminando la barrera de la complejidad técnica."
-                            ],
-                            jobs_desglose: {
-                                funcional: jobFunctional || "Automatizar o resolver tareas complejas de su área con rapidez.",
-                                emocional: jobEmotional || "Desestresarse y ganar tranquilidad y confianza en su flujo de trabajo diario.",
-                                social: jobSocial || "Ser percibido como una marca de alta calidad, ágil, moderna y transparente."
-                            }
-                        };
-                        setGeneratedPersona(localFallback);
-                        setActiveTab('mapa');
-                        triggerToast("Se activó el motor de análisis cualitativo local (Fallback).");
-                    }, 2000);
-                } finally {
-                    setIsGenerating(false);
-                }
-            };
-
-            const handleSimulateAnswer = (option) => {
-                const updatedHistory = [
-                    ...simulatorState.history,
-                    {
-                        question: momTestQuestions[simulatorState.currentQuestionIndex].context,
-                        chosen: option.text,
-                        type: option.type,
-                        response: option.response,
-                        feedback: option.feedback
-                    }
-                ];
-
-                const nextIndex = simulatorState.currentQuestionIndex + 1;
-                const isCompleted = nextIndex >= momTestQuestions.length;
-
-                setSimulatorState({
-                    ...simulatorState,
-                    currentQuestionIndex: nextIndex,
-                    score: simulatorState.score + option.score,
-                    showFeedback: true,
-                    feedbackType: option.type,
-                    feedbackText: option.response,
-                    completed: isCompleted,
-                    history: updatedHistory
-                });
-            };
-
-            const copyPromptCric = () => {
-                const promptText = `
-# CONTEXTO
+            const promptText = `# CONTEXTO
 Propuesta Única de Valor (P.U.V.):
-- Problema: "${suspectNeed}"
-- Quién: "${suspectWho}"
-- Objeción: "${suspectObstacle}"
+- Problema: "${need}"
+- Quién: "${who}"
+- Objeción: "${obstacle}"
 
 Grounding Data (Testimonios reales):
-"${rawNetnography}"
+"${raw}"
 
 Framework Jobs-to-be-Done:
-- Job Funcional: "${jobFunctional}"
-- Job Emocional: "${jobEmotional}"
-- Job Social: "${jobSocial}"
+- Job Funcional: "${f}"
+- Job Emocional: "${em}"
+- Job Social: "${soc}"
 
 # ROL
 Actúa como un UX Researcher senior y experto en el framework "Jobs-to-be-Done" de Clayton Christensen.
@@ -671,670 +701,383 @@ Actúa como un UX Researcher senior y experto en el framework "Jobs-to-be-Done" 
 3. Propón 3 ángulos de venta y mensajes gancho basados estrictamente en las quejas adjuntas.
 
 # CONSTRECCIONES
-- No inventes comportamientos. Si la grounding data no los justifica, déjalos como hipótesis.
-                `;
+- No inventes comportamientos. Si la grounding data no los justifica, déjalos como hipótesis.`;
 
-                const textField = document.createElement('textarea');
-                textField.innerText = promptText;
-                document.body.appendChild(textField);
-                textField.select();
-                document.execCommand('copy');
-                textField.remove();
-                triggerToast("¡Prompt C.R.I.C. copiado al portapapeles!");
-            };
-
-            const downloadTxt = () => {
-                if (!generatedPersona) return;
-                const text = `
-=====================================================
-   PERFIL DE BUYER PERSONA CIENTÍFICO (METODOLOGÍA)
-=====================================================
-Nombre: ${generatedPersona.nombre}
-Edad: ${generatedPersona.edad} | Ubicación: ${generatedPersona.ubicacion}
-Ocupación: ${generatedPersona.ocupacion} | Ingresos: ${generatedPersona.ingresos}
-
---- BIOGRAFÍA EMPÁTICA ---
-${generatedPersona.resumen_perfil}
-
---- TRABAJOS POR HACER (JOBS-TO-BE-DONE) ---
-- Job Funcional: ${generatedPersona.jobs_desglose?.funcional || 'N/D'}
-- Job Emocional: ${generatedPersona.jobs_desglose?.emocional || 'N/D'}
-- Job Social: ${generatedPersona.jobs_desglose?.social || 'N/D'}
-
---- HÁBITOS DE COMPRA ---
-${generatedPersona.comportamiento_compra}
-
---- MAPA DE EMPATÍA ---
-* ¿Qué piensa y siente?: ${generatedPersona.que_piensa_y_siente?.join(' // ')}
-* ¿Qué ve?: ${generatedPersona.que_ve?.join(' // ')}
-* ¿Qué oye?: ${generatedPersona.que_oye?.join(' // ')}
-* ¿Qué dice y hace?: ${generatedPersona.que_dice_y_hace?.join(' // ')}
-* Dolores: ${generatedPersona.dolores?.join(' // ')}
-* Alegrías: ${generatedPersona.alegrias?.join(' // ')}
-
---- ESTRATEGIA RECOMENDADA ---
-${generatedPersona.estrategia_marketing?.join('\n')}
-                `;
-                const element = document.createElement("a");
-                const file = new Blob([text], {type: 'text/plain'});
-                element.href = URL.createObjectURL(file);
-                element.download = `Scientific_Buyer_Persona_${generatedPersona.nombre.replace(/\s+/g, '_')}.txt`;
-                document.body.appendChild(element);
-                element.click();
-                element.remove();
-            };
-
-            // Función de ayuda para copiar un bloque específico de copy
-            const copySpecificText = (textBlock, label) => {
-                const textField = document.createElement('textarea');
-                textField.innerText = textBlock;
-                document.body.appendChild(textField);
-                textField.select();
-                document.execCommand('copy');
-                textField.remove();
-                triggerToast(`¡${label} copiado al portapapeles!`);
-            };
-
-            // Cálculo local dinámico de Ángulos de Ventas y Copys Generados (Borradores en tiempo real)
-            const getComputedCopys = () => {
-                const need = suspectNeed || "[Problema Principal]";
-                const who = suspectWho || "[Público Objetivo]";
-                const obstacle = suspectObstacle || "[Objeción o Miedo]";
-                const emotionalJob = jobEmotional || "[Deseo de Tranquilidad]";
-                const socialJob = jobSocial || "[Imagen de Experto]";
-
-                return {
-                    adDolor: `📢 ANUNCIO (Fórmula PAS - Foco en Dolor):\n\n¿Cansado de sentir que ${need}?\n\nSi eres ${who}, sabes perfectamente de qué hablo. Pasa los días enteros perdiendo tiempo valioso en flujos ineficientes mientras tu competencia avanza.\n\nExiste un método científico diseñado para resolver este antesco de raíz sin que tengas que improvisar o asumir riesgos.\n\n👉 Haz clic para ver cómo funciona gratis hoy.`,
-                    emailDeseo: `📧 EMAIL DE SECUENCIA (Foco en JTBD Emocional & Social):\n\nAsunto: Lo que de verdad te frena para ${emotionalJob}...\n\nHola,\n\nTodos en tu entorno asumen que tu meta al automatizar es simplemente ahorrar tiempo. Pero la realidad es otra.\n\nLo que verdaderamente buscas es poder ${emotionalJob} y que tu equipo te perciba como un ${socialJob}.\n\nEl obstáculo es que sigues cargando con el peso de tener que resolver ${need} de forma manual.\n\nHe diseñado una plantilla paso a paso que elimina esa carga. Descárgala en el siguiente enlace.\n\nUn abrazo.`,
-                    landingPage: `📄 COPY DE LANDING PAGE (Derribando la Objeción Principal):\n\n¿Preocupado de que la solución falle porque temes que ${obstacle}?\n\nEs un miedo normal. En el mercado abundan las herramientas genéricas que se sienten frías e impersonales. Sin embargo, nuestro sistema ha sido entrenado de forma científica utilizando la metodología de Grounding, asegurando que cada resultado respete tu voz y mantenga un estándar profesional absoluto.\n\n[BOTÓN DE ACCIÓN] -> Registrarme gratis ahora.`
-                };
-            };
-
-            // Helper de retroalimentación de puntaje del simulador libre de operadores relacionales para evitar problemas de parseo JSX en Babel
-            const getSimulatorFeedback = (score) => {
-                if (score === 100) {
-                    return "🏆 ¡Investigador UX Experto! Sabes hacer preguntas empíricas y evitas los sesgos de amabilidad de los clientes.";
-                }
-                if (score >= 60) {
-                    return "👍 ¡Buen camino! Sabes cómo anclar varias preguntas, pero aún cae en la tentación de preguntar sobre el futuro.";
-                }
-                return "⚠️ ¡Peligro de Falsos Positivos! Tiendes a vender la idea en vez de investigar hechos pasados del cliente.";
-            };
-
-            const computedLocalCopys = getComputedCopys();
-
-            return (
-                <div className="flex flex-col min-h-screen bg-slate-900 text-slate-100 font-sans">
-                    {/* NAV DE NAVEGACIÓN PRINCIPAL OPTIMIZADA DESKTOP/MOBILE */}
-                    <header className="bg-slate-950 border-b border-teal-500/20 py-4 px-4 sm:px-6 sticky top-0 z-40">
-                        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
-                            <div className="flex items-center gap-3 w-full lg:w-auto text-center lg:text-left justify-center lg:justify-start">
-                                <div className="bg-gradient-to-tr from-teal-500 to-emerald-400 p-2 rounded-xl text-slate-950 shadow-lg shadow-teal-500/20 shrink-0">
-                                    <Compass className="h-5 w-5 sm:h-6 sm:w-6" />
-                                </div>
-                                <div>
-                                    <h1 className="text-lg sm:text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">
-                                        {APP_TITLE}
-                                    </h1>
-                                    <p className="text-[10px] sm:text-xs text-teal-400 font-semibold tracking-wide uppercase mt-0.5">
-                                        {APP_SUBTITLE}
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <nav className="flex flex-wrap justify-center gap-1.5 p-1 bg-slate-900 rounded-xl border border-teal-500/10 w-full lg:w-auto">
-                                <button 
-                                    onClick={function() { setActiveTab('introduccion'); }}
-                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'introduccion' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
-                                >
-                                    <BookOpen className="h-3 w-3 shrink-0" />
-                                    1. Metodología
-                                </button>
-                                <button 
-                                    onClick={function() { setActiveTab('cazador'); }}
-                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'cazador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
-                                >
-                                    <Target className="h-3 w-3 shrink-0" />
-                                    2. Creador Grounding
-                                </button>
-                                <button 
-                                    onClick={function() { setActiveTab('mapa'); }}
-                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'mapa' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
-                                >
-                                    <Brain className="h-3 w-3 shrink-0" />
-                                    3. Visualizador
-                                </button>
-                                <button 
-                                    onClick={function() { setActiveTab('simulador'); }}
-                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'simulador' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
-                                >
-                                    <Users className="h-3 w-3 shrink-0" />
-                                    4. Mom Test Game
-                                </button>
-                                <button 
-                                    onClick={function() { setActiveTab('ejemplos'); }}
-                                    className={"flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all " + (activeTab === 'ejemplos' ? 'bg-teal-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200')}
-                                >
-                                    <Users className="h-3 w-3 shrink-0" />
-                                    Biblioteca ({savedPersonas.length})
-                                </button>
-                            </nav>
-                        </div>
-                    </header>
-
-                    {/* CUERPO PRINCIPAL CON CONTENEDORES RESPONSIVOS */}
-                    <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
-                        
-                        {/* TAB 1: INTRODUCCIÓN Y METODOLOGÍA */}
-                        {activeTab === 'introduccion' && (
-                            <div className="space-y-6 sm:space-y-8 animate-fadeIn">
-                                {/* Explicación breve de la pestaña */}
-                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
-                                    <BookOpen className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                                    <div>
-                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Módulo 1: Fundamentos Científicos</h4>
-                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                                            Aprende por qué la mayoría de los emprendedores fallan al inventar a su cliente ideal y cómo la ciencia del marketing cualitativo resuelve este reto usando datos reales y empáticos.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="bg-gradient-to-br from-teal-950 via-slate-900 to-slate-950 p-6 md:p-10 rounded-3xl border border-teal-500/20 shadow-xl relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
-                                    <div className="relative z-10 max-w-3xl space-y-4">
-                                        <span className="bg-teal-500/20 text-teal-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border border-teal-500/30">
-                                            Enfoque Científico Validado
-                                        </span>
-                                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
-                                            No adivines a tu cliente.<br />
-                                            <span className="bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">Usa la IA como copiloto cualitativo.</span>
-                                        </h2>
-                                        <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed">
-                                            Las guías tradicionales te incitan a inventar un avatar ficticio con Inteligencia Artificial. Esta aplicación rompe ese sesgo y te obliga a utilizar la **Netnografía** de Robert Kozinets, el **Mapa de Empatía** de Dave Gray, la teoría **Jobs-to-be-Done** de Clayton Christensen (Harvard) y la validación de **The Mom Test**.
-                                        </p>
-                                        <div className="pt-2 flex flex-wrap gap-3">
-                                            <button 
-                                                onClick={function() { setActiveTab('cazador'); }}
-                                                className="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-black px-5 py-3 rounded-xl shadow-lg hover:shadow-teal-500/20 transition flex items-center gap-2 text-xs"
-                                            >
-                                                Ir al Creador Metodológico
-                                                <ArrowRight className="h-4 w-4 shrink-0" />
-                                            </button>
-                                            <button 
-                                                onClick={function() { handleLoadPreset(presets[0]); }}
-                                                className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-5 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2 text-xs"
-                                            >
-                                                Ver un Ejemplo Listo (Anclaje Real)
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-red-500/20 space-y-3">
-                                        <h3 className="text-red-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
-                                            <AlertTriangle className="h-5 w-5 shrink-0" />
-                                            El Error del Comportamiento Sintético
-                                        </h3>
-                                        <p className="text-slate-400 text-xs leading-relaxed">
-                                            Cuando pides a una IA que dibuje a un comprador ideal de la nada, obtienes un **perfil sintético de asunciones**. Basarás tus estrategias en dolores de mercado demasiado promedio (como "ahorrar tiempo") que tu competencia repite de forma idéntica, diluyendo tu ventaja competitiva.
-                                        </p>
-                                    </div>
-
-                                    <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-emerald-500/20 space-y-3">
-                                        <h3 className="text-emerald-400 font-extrabold text-sm sm:text-base flex items-center gap-2">
-                                            <Award className="h-5 w-5 shrink-0" />
-                                            La Solución: Copiloto Analítico con Grounding
-                                        </h3>
-                                        <p className="text-slate-400 text-xs leading-relaxed">
-                                            Nuestra metodología te enseña a alimentar a la IA con **Grounding Data** (testimonios textuales y quejas de competidores de foros como Reddit o Quora). La IA se convierte en una potente analista semántica cualitativa.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* TAB 2: CREADOR METODOLÓGICO */}
-                        {activeTab === 'cazador' && (
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start animate-fadeIn">
-                                <div className="lg:col-span-2 bg-slate-950 rounded-2xl border border-slate-800 p-5 sm:p-6 space-y-6">
-                                    {/* Explicación breve de la pestaña */}
-                                    <div className="bg-slate-900 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
-                                        <Target className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                                        <div>
-                                            <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">¿Qué es el Grounding?</h4>
-                                            <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                                                Consiste en "anclar" la Inteligencia Artificial a la realidad suministrándole quejas, testimonios y comentarios reales del mercado. Así, obligas a la tecnología a trabajar sobre datos empíricos reales en lugar de inventar estereotipos.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div className="border-b border-slate-800 pb-4">
-                                        <h3 className="font-bold text-base sm:text-lg text-slate-200">Creador Metodológico de Grounding</h3>
-                                    </div>
-
-                                    <form onSubmit={generateWithIA} className="space-y-6 text-xs">
-                                        <div className="space-y-4">
-                                            <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 1: Tu Inventario de Sospechas (La P.U.V.)</span>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="space-y-1.5">
-                                                    <label className="block text-slate-300 font-bold">1. ¿Qué problema o necesidad asumes que resuelves?</label>
-                                                    <input 
-                                                        type="text"
-                                                        value={suspectNeed}
-                                                        onChange={function(e) { setSuspectNeed(e.target.value); }}
-                                                        placeholder="Ej: Escribir textos de venta les toma días enteros de fatiga."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm"
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="space-y-1.5">
-                                                    <label className="block text-slate-300 font-bold">2. ¿A quién crees que se lo solucionas?</label>
-                                                    <input 
-                                                        type="text"
-                                                        value={suspectWho}
-                                                        onChange={function(e) { setSuspectWho(e.target.value); }}
-                                                        placeholder="Ej: Emprendedores digitales y consultores."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 text-xs sm:text-sm"
-                                                        required
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-4 pt-4 border-t border-slate-800">
-                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                                <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 2: Datos Netnográficos Reales (Grounding Data)</span>
-                                            </div>
-                                            <textarea
-                                                value={rawNetnography}
-                                                onChange={function(e) { setRawNetnography(e.target.value); }}
-                                                placeholder="Pega testimonios literales o quejas de foros, Amazon, etc..."
-                                                className="w-full h-32 bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-teal-500 text-slate-100 font-mono text-xs sm:text-sm"
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="space-y-4 pt-4 border-t border-slate-800">
-                                            <span className="text-teal-400 font-extrabold uppercase tracking-widest text-[9px] sm:text-[10px]">Módulo 3: Jobs-to-be-Done (La Motivación)</span>
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                <div className="space-y-1.5">
-                                                    <label className="block text-slate-300 font-bold">1. Job Funcional (Tarea técnica)</label>
-                                                    <input 
-                                                        type="text"
-                                                        value={jobFunctional}
-                                                        onChange={function(e) { setJobFunctional(e.target.value); }}
-                                                        placeholder="Ej: Escribir copys rápido."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
-                                                    />
-                                                </div>
-                                                <div className="space-y-1.5">
-                                                    <label className="block text-slate-300 font-bold">2. Job Emocional (¿Cómo sentirse?)</label>
-                                                    <input 
-                                                        type="text"
-                                                        value={jobEmotional}
-                                                        onChange={function(e) { setJobEmotional(e.target.value); }}
-                                                        placeholder="Ej: Sentirme tranquilo con el tono."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
-                                                    />
-                                                </div>
-                                                <div className="space-y-1.5">
-                                                    <label className="block text-slate-300 font-bold">3. Job Social (¿Cómo ser percibido?)</label>
-                                                    <input 
-                                                        type="text"
-                                                        value={jobSocial}
-                                                        onChange={function(e) { setJobSocial(e.target.value); }}
-                                                        placeholder="Ej: Parecer experto y empático."
-                                                        className="w-full bg-slate-900 border border-slate-800 p-2.5 rounded-xl focus:outline-none text-slate-100 text-xs sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="p-4 bg-slate-900 rounded-xl border border-teal-500/10 space-y-2">
-                                            <label className="block text-slate-300 font-bold text-xs sm:text-sm">Gemini API Key (Opcional)</label>
-                                            <input 
-                                                type="password"
-                                                value={apiKey}
-                                                onChange={function(e) { setApiKey(e.target.value); }}
-                                                placeholder="Ingresa tu clave de API si tienes una..."
-                                                className="w-full bg-slate-950 border border-slate-800 p-2 rounded-lg text-xs font-mono text-teal-300"
-                                            />
-                                        </div>
-
-                                        <div className="flex flex-col sm:flex-row gap-3 justify-between pt-2 border-t border-slate-800">
-                                            <button
-                                                type="button"
-                                                onClick={copyPromptCric}
-                                                className="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-3 rounded-xl border border-slate-800 text-xs"
-                                            >
-                                                Copiar Prompt C.R.I.C. Maestro
-                                            </button>
-                                            <button
-                                                type="submit"
-                                                disabled={isGenerating}
-                                                className="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-6 py-3 rounded-xl disabled:opacity-50 text-xs"
-                                            >
-                                                {isGenerating ? "Analizando..." : "Generar con IA"}
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div className="space-y-6">
-                                    <div className="bg-slate-950 border border-slate-800 p-5 rounded-2xl space-y-4">
-                                        <h4 className="font-bold text-xs text-slate-200 uppercase tracking-wider">Prueba rápida con plantilla</h4>
-                                        <button
-                                            type="button"
-                                            onClick={function() { handleLoadPreset(presets[0]); }}
-                                            className="w-full text-left p-3.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-teal-500 text-xs transition"
-                                        >
-                                            <span className="font-bold text-slate-200 text-xs block">{presets[0].title}</span>
-                                            <span className="text-[10px] text-slate-400 line-clamp-2 italic mt-1">"{presets[0].rawNetnography.split('\n')[2]}"</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* TAB 3: VISUALIZADOR DE PERFIL */}
-                        {activeTab === 'mapa' && (
-                            <div className="space-y-6 sm:space-y-8 animate-fadeIn">
-                                {/* Explicación breve de la pestaña */}
-                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
-                                    <Brain className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                                    <div>
-                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Lienzo de Empatía & Copys</h4>
-                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                                            Aquí visualizas la psicología del cliente ideal junto con los **Ángulos de Ventas y Copys Generados** en tiempo real a partir de tus datos cualitativos.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* ESTADO VACÍO (EMPTY STATE) CON ACCIONES RÁPIDAS SI NO HAY DATOS DE ENTRADA */}
-                                {!generatedPersona && (
-                                    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-8 text-center space-y-6 max-w-xl mx-auto">
-                                        <div className="w-16 h-16 rounded-full bg-teal-500/10 text-teal-400 flex items-center justify-center mx-auto border border-teal-500/25">
-                                            <Brain className="h-8 w-8" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <h4 className="text-lg sm:text-xl font-bold text-slate-100">Visualizador de Buyer Persona Vacío</h4>
-                                            <p className="text-xs text-slate-400 leading-relaxed">
-                                                Aún no has introducido datos en tu creador ni has realizado un análisis cualitativo. Para ver la potencia de este framework interactivo, puedes cargar nuestra plantilla de ejemplo o ir al creador para rellenar tus propios datos de grounding.
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-                                            <button 
-                                                onClick={function() { handleLoadPreset(presets[0]); }}
-                                                className="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-extrabold px-5 py-3 rounded-xl text-xs transition"
-                                            >
-                                                Cargar Caso de Estudio Integrado
-                                            </button>
-                                            <button 
-                                                onClick={function() { setActiveTab('cazador'); }}
-                                                className="bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-5 py-3 rounded-xl text-xs shadow-lg shadow-teal-500/10 transition"
-                                            >
-                                                Ir al Creador Grounding
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {generatedPersona && (
-                                    <React.Fragment>
-                                        <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 text-lg sm:text-xl font-black">
-                                                    {generatedPersona.nombre[0]}
-                                                </div>
-                                                <div>
-                                                    <h2 className="text-lg sm:text-xl font-bold text-slate-200">{generatedPersona.nombre}</h2>
-                                                    <p className="text-xs text-slate-400 mt-1">{generatedPersona.ocupacion} • {generatedPersona.edad}</p>
-                                                </div>
-                                            </div>
-                                            <div className="flex gap-2 w-full sm:w-auto">
-                                                <button onClick={downloadTxt} className="flex-1 sm:flex-none bg-slate-900 border border-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-xs">Descargar TXT</button>
-                                                <button onClick={savePersona} className="flex-1 sm:flex-none bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs">Guardar Perfil</button>
-                                            </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                            <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 space-y-5">
-                                                <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">Ficha Sociodemográfica</h3>
-                                                <p className="text-xs sm:text-sm text-slate-300 bg-slate-900 p-4 rounded-xl border border-slate-800 leading-relaxed font-medium">{generatedPersona.resumen_perfil}</p>
-                                                <div className="space-y-2 mt-2">
-                                                    <span className="text-slate-400 font-bold block text-[10px] uppercase tracking-wider">Hábitos de Compra:</span>
-                                                    <p className="text-xs text-slate-300 bg-slate-900 p-3 rounded-lg border border-slate-800 leading-relaxed font-medium">
-                                                        {generatedPersona.comportamiento_compra}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div className="lg:col-span-2 bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-800 space-y-5">
-                                                <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">Trabajos por Hacer (JTBD)</h3>
-                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                    <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
-                                                        <span className="text-teal-400 font-extrabold text-[10px] uppercase">Funcional</span>
-                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{ (generatedPersona.jobs_desglose && generatedPersona.jobs_desglose.funcional) || jobFunctional || "Por rellenar en el Módulo 3" }</p>
-                                                    </div>
-                                                    <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
-                                                        <span className="text-pink-400 font-extrabold text-[10px] uppercase">Emocional</span>
-                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{ (generatedPersona.jobs_desglose && generatedPersona.jobs_desglose.emocional) || jobEmotional || "Por rellenar en el Módulo 3" }</p>
-                                                    </div>
-                                                    <div className="bg-slate-900 p-4 rounded-xl border border-slate-800">
-                                                        <span className="text-indigo-400 font-extrabold text-[10px] uppercase">Social</span>
-                                                        <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{ (generatedPersona.jobs_desglose && generatedPersona.jobs_desglose.social) || jobSocial || "Por rellenar en el Módulo 3" }</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* SECCIÓN ESTRELLA: ÁNGULOS DE VENTAS Y COPYS GENERADOS */}
-                                        <div className="bg-slate-950 p-5 sm:p-6 rounded-2xl border border-teal-500/30 space-y-5">
-                                            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                                                <h3 className="font-extrabold text-teal-300 text-sm sm:text-base flex items-center gap-2">
-                                                    <Sparkles className="h-5 w-5 text-teal-400" />
-                                                    Ángulos de Ventas y Copys Generados
-                                                </h3>
-                                                <span className="text-[10px] bg-teal-500/10 text-teal-300 font-extrabold border border-teal-500/20 px-2.5 py-0.5 rounded-full">
-                                                    Copywriting Persuasivo
-                                                </span>
-                                            </div>
-                                            <p className="text-xs text-slate-400 leading-relaxed">
-                                                A continuación, tienes las plantillas y ángulos redactados de manera persuasiva con base en las frustraciones netnográficas que has ingresado en tu creador. ¡Listas para copiar y lanzar!
-                                            </p>
-
-                                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
-                                                {/* Card 1: Anuncio Dolor PAS */}
-                                                <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-4">
-                                                    <div className="space-y-2">
-                                                        <span className="text-[9px] bg-red-500/10 text-red-400 font-extrabold px-2 py-0.5 rounded-full border border-red-500/20">Fórmula PAS (Dolor)</span>
-                                                        <h4 className="font-bold text-slate-200 text-xs sm:text-sm">1. Copy para Redes o Anuncio</h4>
-                                                        <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto">
-                                                            { (generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[1]) || computedLocalCopys.adDolor }
-                                                        </p>
-                                                    </div>
-                                                    <button 
-                                                        onClick={function() { copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[1]) || computedLocalCopys.adDolor, "Copy de Anuncio"); }}
-                                                        className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
-                                                    >
-                                                        Copiar Copy de Anuncio
-                                                    </button>
-                                                </div>
-
-                                                {/* Card 2: Email Deseo Secuencia */}
-                                                <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-4">
-                                                    <div className="space-y-2">
-                                                        <span className="text-[9px] bg-pink-500/10 text-pink-400 font-extrabold px-2 py-0.5 rounded-full border border-pink-500/20">Email de Secuencia (JTBD)</span>
-                                                        <h4 className="font-bold text-slate-200 text-xs sm:text-sm">2. Email de Alta Conversión</h4>
-                                                        <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto">
-                                                            {computedLocalCopys.emailDeseo}
-                                                        </p>
-                                                    </div>
-                                                    <button 
-                                                        onClick={function() { copySpecificText(computedLocalCopys.emailDeseo, "Email de Secuencia"); }}
-                                                        className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
-                                                    >
-                                                        Copiar Email de Secuencia
-                                                    </button>
-                                                </div>
-
-                                                {/* Card 3: Landing Page Derribar Objeción */}
-                                                <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-4">
-                                                    <div className="space-y-2">
-                                                        <span className="text-[9px] bg-indigo-500/10 text-indigo-400 font-extrabold px-2 py-0.5 rounded-full border border-indigo-500/20">Rompe-Objeción Principal</span>
-                                                        <h4 className="font-bold text-slate-200 text-xs sm:text-sm">3. Mensaje para Landing Page</h4>
-                                                        <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-line bg-slate-950 p-3 rounded-lg font-mono text-[11px] h-48 overflow-y-auto">
-                                                            { (generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[0]) || computedLocalCopys.landingPage }
-                                                        </p>
-                                                    </div>
-                                                    <button 
-                                                        onClick={function() { copySpecificText((generatedPersona.estrategia_marketing && generatedPersona.estrategia_marketing[0]) || computedLocalCopys.landingPage, "Copy de Landing Page"); }}
-                                                        className="w-full bg-slate-950 hover:bg-slate-850 text-teal-300 font-bold py-2 rounded-lg text-xs transition border border-teal-500/10"
-                                                    >
-                                                        Copiar Copy de Landing
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-4">
-                                            <h3 className="text-base sm:text-lg font-bold text-slate-200">El Mapa de Empatía Científico</h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                                                <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
-                                                    <span className="text-pink-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué piensa y siente?</span>
-                                                    { (generatedPersona.que_piensa_y_siente && generatedPersona.que_piensa_y_siente.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
-                                                </div>
-                                                <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
-                                                    <span className="text-indigo-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué ve?</span>
-                                                    { (generatedPersona.que_ve && generatedPersona.que_ve.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
-                                                </div>
-                                                <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
-                                                    <span className="text-sky-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué oye?</span>
-                                                    { (generatedPersona.que_oye && generatedPersona.que_oye.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
-                                                </div>
-                                                <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
-                                                    <span className="text-emerald-400 font-extrabold text-[10px] uppercase tracking-wider block">¿Qué dice y hace?</span>
-                                                    { (generatedPersona.que_dice_y_hace && generatedPersona.que_dice_y_hace.map(function(item, i) { return <p key={i} className="text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed">{item}</p>; })) }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </React.Fragment>
-                                )}
-                            </div>
-                        )}
-
-                        {/* TAB 4: SIMULADOR GAMIFICADO "THE MOM TEST" */}
-                        {activeTab === 'simulador' && (
-                            <div className="max-w-3xl mx-auto space-y-6 animate-fadeIn">
-                                {/* Explicación breve de la pestaña */}
-                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
-                                    <Users className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                                    <div>
-                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">¿Qué es el Mom Test Game?</h4>
-                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                                            Un simulador interactivo de validación de campo. Aprende a entrevistar clientes reales basándote en el libro "The Mom Test" para evitar opiniones falsas de cortesía.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="bg-slate-950 border border-slate-800 p-5 sm:p-6 rounded-3xl space-y-4">
-                                    <h3 className="font-extrabold text-base sm:text-lg text-slate-200">El Simulador "The Mom Test"</h3>
-                                    <p className="text-xs sm:text-sm text-slate-400">Valida tus hipótesis de cliente real con preguntas empíricas y evita los falsos positivos.</p>
-                                </div>
-
-                                {!simulatorState.completed ? (
-                                    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-6">
-                                        <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs sm:text-sm text-slate-200 leading-relaxed">
-                                            {momTestQuestions[simulatorState.currentQuestionIndex].context}
-                                        </div>
-                                        <div className="space-y-3">
-                                            {momTestQuestions[simulatorState.currentQuestionIndex].options.map(function(opt, i) {
-                                                return (
-                                                    <button 
-                                                        key={i} 
-                                                        onClick={function() { handleSimulateAnswer(opt); }} 
-                                                        className="w-full text-left p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs sm:text-sm font-bold text-slate-200 transition flex justify-between items-center gap-2"
-                                                    >
-                                                        <span>{opt.text}</span>
-                                                    </button>
-                                                );
-                                            })}
-                                        </div>
-                                        {simulatorState.showFeedback && (
-                                            <div className={"p-4 rounded-xl border text-xs sm:text-sm leading-relaxed " + (simulatorState.feedbackType === 'buena' ? 'bg-emerald-950/25 border-emerald-500/20 text-emerald-300' : 'bg-rose-950/25 border-rose-500/20 text-rose-300')}>
-                                                <p className="font-black">{simulatorState.feedbackType === 'buena' ? '✓ Respuesta Correcta' : '⚠️ Alerta de Sesgo'}</p>
-                                                <p className="mt-1">{simulatorState.feedbackText}</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                ) : (
-                                    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 text-center space-y-6">
-                                        <h4 className="text-lg sm:text-xl font-bold">Simulación Completada</h4>
-                                        <p className="text-xs sm:text-sm text-slate-400">Puntaje total obtenido en la entrevista: <span className="font-black text-teal-400">{simulatorState.score}%</span></p>
-                                        <span className="text-[11px] text-slate-300 mt-2 block font-medium">
-                                            {getSimulatorFeedback(simulatorState.score)}
-                                        </span>
-                                        <button onClick={restartSimulator} className="bg-slate-900 border border-slate-800 text-slate-300 font-bold px-6 py-3 rounded-xl text-xs mx-auto">Reiniciar simulador</button>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {/* TAB 5: BIBLIOTECA */}
-                        {activeTab === 'ejemplos' && (
-                            <div className="space-y-6 sm:space-y-8 animate-fadeIn">
-                                {/* Explicación breve de la pestaña */}
-                                <div className="bg-slate-950 border border-teal-500/20 p-4 rounded-xl flex items-start gap-3">
-                                    <Users className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                                    <div>
-                                        <h4 className="font-extrabold text-teal-300 text-xs sm:text-sm uppercase tracking-wider">Historial de Perfiles</h4>
-                                        <p className="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                                            Tu base de datos local para guardar, comparar y consultar los arquetipos cualitativos validados que hayas creado.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <h3 className="text-lg sm:text-xl font-bold">Mis Buyer Personas Guardados</h3>
-                                {savedPersonas.length === 0 ? (
-                                    <p className="text-xs sm:text-sm text-slate-400">No tienes perfiles guardados de momento.</p>
-                                ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        {savedPersonas.map(function(persona) {
-                                            return (
-                                                <div key={persona.id} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
-                                                    <h4 className="font-bold text-slate-200 text-sm">{persona.nombre}</h4>
-                                                    <p className="text-xs text-slate-400">{persona.ocupacion}</p>
-                                                    <button onClick={function() { setGeneratedPersona(persona); setActiveTab('mapa'); }} className="w-full bg-slate-900 hover:bg-slate-850 text-xs font-bold py-2.5 rounded-xl font-medium">Visualizar</button>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </main>
-
-                    {/* PIE DE PÁGINA PREMIUM CON ENLACES DEL AUTOR */}
-                    <footer className="bg-slate-950 border-t border-teal-500/10 py-8 px-4 sm:px-6 text-center text-slate-400 text-xs space-y-3">
-                        <p className="max-w-2xl mx-auto leading-relaxed text-[11px] sm:text-xs">
-                            Esta aplicación interactiva es un material de apoyo metodológico y práctico para lectores de la <strong>"Guía Científica y Práctica para Construir tu Buyer Persona con IA"</strong>.
-                        </p>
-                        <p className="text-teal-400 font-bold text-[10px] sm:text-xs uppercase tracking-wider">
-                            Desarrollado por <a href="https://rodolfobuitrago.com" target="_blank" rel="noopener noreferrer" className="hover:underline text-teal-300 font-extrabold transition-all">Rodolfo Buitrago</a>
-                        </p>
-                        <p className="text-slate-500 text-[10px] sm:text-[11px]">
-                            Visita <a href="https://rodolfobuitrago.com" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline hover:text-teal-300 font-bold">rodolfobuitrago.com</a> para acceder a más herramientas y programas de entrenamiento de IA aplicados a ventas.
-                        </p>
-                    </footer>
-                </div>
-            );
+            navigator.clipboard.writeText(promptText).then(() => {
+                showToast("¡Prompt maestro C.R.I.C. copiado!");
+            }).catch(() => {
+                const temp = document.createElement("textarea");
+                temp.value = promptText;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand("copy");
+                document.body.removeChild(temp);
+                showToast("¡Prompt maestro C.R.I.C. copiado!");
+            });
         }
 
-        // Renderizar la app en el DOM
-        const container = document.getElementById('root');
-        const root = ReactDOM.createRoot(container);
-        root.render(<App />);
+        // --- SUBMIT DEL CREADOR (SÍNTESIS DE IA / LOCAL FALLBACK) ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-generate');
+            const btnText = document.getElementById('btn-text');
+
+            btn.disabled = true;
+            btnText.innerText = "Analizando cualitativamente...";
+
+            const apiKey = document.getElementById('input-api-key').value.trim();
+            const need = document.getElementById('input-need').value;
+            const who = document.getElementById('input-who').value;
+            const obstacle = document.getElementById('input-obstacle').value || "No especificada";
+            const raw = document.getElementById('input-netnography').value;
+            const f = document.getElementById('input-job-func').value || "No especificado";
+            const em = document.getElementById('input-job-emo').value || "No especificado";
+            const soc = document.getElementById('input-job-soc').value || "No especificado";
+
+            // Si hay API KEY conectamos con Gemini
+            if (apiKey) {
+                const promptCric = `Genera un JSON según este esquema estricto de Buyer Persona basado en la necesidad "${need}", público "${who}" y objeción "${obstacle}". Datos netnográficos adjuntos: "${raw}". JTBD: funcional "${f}", emocional "${em}", social "${soc}". Esquema JSON: {"nombre":"Nombre Ficticio", "edad":"Edad", "ocupacion":"Ocupacion", "ingresos":"Ingresos", "ubicacion":"Ubicacion", "resumen_perfil":"Perfil", "comportamiento_compra":"Habitos", "que_ve":["v1","v2","v3"], "que_oye":["o1","o2","o3"], "que_piensa_y_siente":["p1","p2","p3"], "que_dice_y_hace":["d1","d2","d3"], "dolores":["do1","do2","do3"], "alegrias":["al1","al2","al3"], "estrategia_marketing":["est1","est2","est3"], "jobs_desglose":{"funcional":"${f}","emocional":"${em}","social":"${soc}"}}`;
+
+                fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: promptCric }] }] })
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error("API Key inválida o límite de tasa alcanzado.");
+                    return res.json();
+                })
+                .then(data => {
+                    const text = data.candidates[0].content.parts[0].text;
+                    const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+                    state.generatedPersona = JSON.parse(cleanText);
+                    switchTab('mapa');
+                    showToast("¡Buyer Persona estructurado por la IA con Grounding!");
+                })
+                .catch(err => {
+                    console.error(err);
+                    triggerLocalFallback(need, who, obstacle, f, em, soc);
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btnText.innerText = "Generar con IA";
+                });
+            } else {
+                // Ejecución offline / fallback local inmediato
+                setTimeout(() => {
+                    triggerLocalFallback(need, who, obstacle, f, em, soc);
+                    btn.disabled = false;
+                    btnText.innerText = "Generar con IA";
+                }, 1500);
+            }
+        }
+
+        function triggerLocalFallback(need, who, obstacle, f, em, soc) {
+            state.generatedPersona = {
+                nombre: who.split(' ')[0] ? who.split(' ')[0] + " Validado" : "Cliente de Grounding",
+                edad: "28 - 43 años",
+                ocupacion: who,
+                ingresos: "Medio - Alto acorde a perfil",
+                ubicacion: "Hispanoamérica (Digital)",
+                resumen_perfil: `Este perfil representa a un usuario frustrado por la problemática de: "${need}". El análisis netnográfico de los comentarios revela que ha intentado otras alternativas pero las descartó por sonar artificiales o ser complejas.`,
+                comportamiento_compra: "Busca activamente valoraciones e investiga en foros y comentarios de YouTube antes de realizar una inversión. Prefiere un periodo de prueba o ejemplos visuales claros antes de comprar.",
+                que_ve: [
+                    "Anuncios y herramientas automatizadas prometiendo milagros rápidos.",
+                    "Colegas y competidores que parecen optimizar su trabajo diario con metodologías modernas.",
+                    "Muchos contenidos genéricos y repetitivos en su bandeja de entrada."
+                ],
+                que_oye: [
+                    "Consejos de referentes diciendo que debe sistematizar sus tareas repetitivas para escalar.",
+                    "Críticas de su comunidad de que muchas ofertas en redes sociales se sienten como spam robótico.",
+                    "Colegas recomendando enfocarse en la diferenciación y la calidad humana."
+                ],
+                que_piensa_y_siente: [
+                    `Inquietud por no resolver eficazmente: "${need}".`,
+                    "Deseo de diferenciarse en el mercado y no verse como una marca genérica.",
+                    `Esperanza de encontrar un método claro y práctico que le permita escalar sin fatiga mental.`
+                ],
+                que_dice_y_hace: [
+                    "Dice en foros que busca plantillas y metodologías prácticas listas para usar.",
+                    "Intenta configurar flujos empíricamente pero se frustra en los detalles técnicos.",
+                    "Prefiere delegar o automatizar si percibe que el resultado mantiene la calidad empática."
+                ],
+                dolores: [
+                    `El atasco operativo y el estrés generado por: "${need}".`,
+                    "Que las herramientas automáticas entreguen un resultado robótico e impersonal.",
+                    "Perder tiempo y dinero en tutoriales teóricos sin un paso a paso aplicable de inmediato."
+                ],
+                alegrias: [
+                    "Resolver el problema de forma ágil preservando su voz y calidad profesional.",
+                    "Optimizar sus flujos ahorrando hasta un 75% del tiempo que gastaba en tareas manuales.",
+                    "Sentir el alivio mental y la tranquilidad de tener el control sobre su estrategia comercial."
+                ],
+                estrategia_marketing: [
+                    `Ángulo de Venta: Centrar la comunicación en evitar el dolor del atasco y la hoja en blanco, entregando plantillas o metodologías de rápida ejecución.`,
+                    `Mensaje Gancho: 'No más respuestas genéricas ni fatiga mental. Conoce el método paso a paso que te permite solucionar ${need.slice(0, 45)}... manteniendo tu esencia profesional.'`,
+                    "Canal Recomendado: Campañas de contenido educativo que muestren el proceso paso a paso, eliminando la barrera de la complejidad técnica."
+                ],
+                jobs_desglose: {
+                    funcional: f,
+                    emocional: em,
+                    social: soc
+                }
+            };
+            switchTab('mapa');
+            showToast("Se activó el motor de análisis cualitativo local (Grounding Offline).");
+        }
+
+        // --- RENDER VISUALIZADOR ---
+        function renderVisualizer() {
+            const emptyDiv = document.getElementById('visualizer-empty');
+            const contentDiv = document.getElementById('visualizer-content');
+
+            if (!state.generatedPersona) {
+                emptyDiv.classList.remove('hidden');
+                contentDiv.classList.add('hidden');
+                return;
+            }
+
+            emptyDiv.classList.add('hidden');
+            contentDiv.classList.remove('hidden');
+
+            const p = state.generatedPersona;
+            document.getElementById('persona-initial').innerText = p.nombre[0].toUpperCase();
+            document.getElementById('persona-name').innerText = p.nombre;
+            document.getElementById('persona-meta').innerText = `${p.ocupacion} • ${p.edad} • ${p.ubicacion}`;
+            document.getElementById('persona-bio').innerText = p.resumen_perfil;
+            document.getElementById('persona-habits').innerText = p.comportamiento_compra;
+
+            // Jobs
+            document.getElementById('jtbd-func').innerText = p.jobs_desglose.funcional || "Por rellenar";
+            document.getElementById('jtbd-emo').innerText = p.jobs_desglose.emocional || "Por rellenar";
+            document.getElementById('jtbd-soc').innerText = p.jobs_desglose.social || "Por rellenar";
+
+            // Mapa
+            renderList('map-think', p.que_piensa_y_siente);
+            renderList('map-see', p.que_ve);
+            renderList('map-hear', p.que_oye);
+            renderList('map-say', p.que_dice_y_hace);
+            renderList('map-think', p.que_piensa_y_siente);
+            
+            // Dolores y Alegrias
+            const painContainer = document.querySelector('[data-panel="mapa"] .bg-rose-950\\/20 div');
+            if (painContainer) renderListEl(painContainer, p.dolores);
+            
+            const joyContainer = document.querySelector('[data-panel="mapa"] .bg-emerald-950\\/20 div');
+            if (joyContainer) renderListEl(joyContainer, p.alegrias);
+
+            // Copys Generados
+            const computed = getComputedCopys();
+            document.getElementById('copy-ad').innerText = p.estrategia_marketing[1] || computed.adDolor;
+            document.getElementById('copy-email').innerText = computed.emailDeseo;
+            document.getElementById('copy-landing').innerText = p.estrategia_marketing[0] || computed.landingPage;
+        }
+
+        function renderList(elementId, items) {
+            const container = document.getElementById(elementId);
+            if (!container) return;
+            renderListEl(container, items);
+        }
+
+        function renderListEl(container, items) {
+            container.innerHTML = '';
+            if (items && items.length) {
+                items.forEach(item => {
+                    const p = document.createElement('p');
+                    p.className = "text-xs sm:text-sm bg-slate-900 p-2.5 rounded-lg leading-relaxed";
+                    p.innerText = item;
+                    container.appendChild(p);
+                });
+            }
+        }
+
+        // --- CÓPIADO DE COPYS ESPECÍFICOS ---
+        function copySpecificText(elementId, label) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`¡${label} copiado!`);
+            }).catch(() => {
+                const temp = document.createElement("textarea");
+                temp.value = text;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand("copy");
+                document.body.removeChild(temp);
+                showToast(`¡${label} copiado!`);
+            });
+        }
+
+        // --- CÁLCULO DE COPYS DINÁMICOS LOCALES ---
+        function getComputedCopys() {
+            const need = document.getElementById('input-need').value || "[Problema Principal]";
+            const who = document.getElementById('input-who').value || "[Público Objetivo]";
+            const obstacle = document.getElementById('input-obstacle').value || "[Objeción o Miedo]";
+            const em = document.getElementById('input-job-emo').value || "[Deseo de Tranquilidad]";
+            const soc = document.getElementById('input-job-soc').value || "[Imagen de Experto]";
+
+            return {
+                adDolor: `📢 ANUNCIO (Fórmula PAS):\n\n¿Cansado de sentir que ${need}?\n\nSi eres ${who}, sabes perfectamente de qué hablo. Pasa los días enteros perdiendo tiempo valioso en flujos ineficientes mientras tu competencia avanza.\n\nExiste un método científico diseñado para resolver este antesco de raíz sin que tengas que improvisar o asumir riesgos.\n\n👉 Haz clic para ver cómo funciona gratis hoy.`,
+                emailDeseo: `📧 EMAIL DE SECUENCIA (Foco en JTBD):\n\nAsunto: Lo que de verdad te frena para ${em}...\n\nHola,\n\nTodos en tu entorno asumen que tu meta al automatizar es simplemente ahorrar tiempo. Pero la realidad es otra.\n\nLo que verdaderamente buscas es poder ${em} y que tu equipo te perciba como un ${soc}.\n\nEl obstáculo es que sigues cargando con el peso de tener que resolver ${need} de forma manual.\n\nHe diseñado una plantilla paso a paso que elimina esa carga. Descárgala en el siguiente enlace.\n\nUn abrazo.`,
+                landingPage: `📄 COPY DE LANDING PAGE:\n\n¿Preocupado de que la solución falle porque temes que ${obstacle}?\n\nEs un miedo normal. En el mercado abundan las herramientas genéricas que se sienten frías e impersonales. Sin embargo, nuestro sistema ha sido entrenado de forma científica utilizando la metodología de Grounding, asegurando que cada resultado respete tu voz y mantenga un estándar profesional absoluto.\n\n[BOTÓN DE ACCIÓN] -> Registrarme gratis ahora.`
+            };
+        }
+
+        // --- DESCARGAR ARQUETIPO .TXT ---
+        function downloadPersonaTxt() {
+            if (!state.generatedPersona) return;
+            const p = state.generatedPersona;
+            const text = `=====================================================\n   PERFIL DE BUYER PERSONA CIENTÍFICO (METODOLOGÍA)\n=====================================================\nNombre: ${p.nombre}\nEdad: ${p.edad}\nOcupación: ${p.ocupacion}\nIngresos: ${p.ingresos}\nUbicación: ${p.ubicacion}\n\n--- BIOGRAFÍA EMPÁTICA ---\n${p.resumen_perfil}\n\n--- TRABAJOS POR HACER ---\nFuncional: ${p.jobs_desglose.funcional}\nEmocional: ${p.jobs_desglose.emocional}\nSocial: ${p.jobs_desglose.social}`;
+            
+            const element = document.createElement("a");
+            const file = new Blob([text], {type: 'text/plain'});
+            element.href = URL.createObjectURL(file);
+            element.download = `Buyer_Persona_${p.nombre.replace(/\s+/g, '_')}.txt`;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // --- GUARDAR Y PERSISTENCIA ---
+        function saveCurrentPersona() {
+            if (!state.generatedPersona) return;
+            const isSaved = state.savedPersonas.some(p => p.nombre === state.generatedPersona.nombre);
+            if (isSaved) {
+                showToast("Este perfil ya se encuentra guardado.");
+                return;
+            }
+            state.savedPersonas.push({ ...state.generatedPersona, id: Date.now() });
+            localStorage.setItem('scientific_buyer_personas', JSON.stringify(state.savedPersonas));
+            updateSavedCount();
+            showToast("¡Buyer Persona guardado exitosamente!");
+        }
+
+        // --- RENDER BIBLIOTECA ---
+        function renderBiblioteca() {
+            const grid = document.getElementById('library-grid');
+            grid.innerHTML = '';
+
+            if (state.savedPersonas.length === 0) {
+                grid.innerHTML = `<div class="col-span-full p-8 text-center text-slate-500 text-xs">No tienes perfiles guardados de momento en tu navegador.</div>`;
+                return;
+            }
+
+            state.savedPersonas.forEach(persona => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-950 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between gap-4";
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                            <span class="text-[10px] bg-teal-500/10 text-teal-300 px-2 py-0.5 rounded-full font-bold border border-teal-500/20">Guardado</span>
+                            <button onclick="deletePersona(${persona.id})" class="text-xs text-rose-400 hover:text-rose-350 font-extrabold flex items-center gap-1">
+                                Eliminar
+                            </button>
+                        </div>
+                        <h4 class="font-bold text-slate-200 text-sm">${persona.nombre}</h4>
+                        <p class="text-[10px] text-slate-400">${persona.ocupacion}</p>
+                    </div>
+                `;
+                const viewBtn = document.createElement('button');
+                viewBtn.className = "w-full bg-slate-900 hover:bg-slate-800 text-xs font-bold py-2.5 rounded-xl border border-slate-800 transition";
+                viewBtn.innerText = "Visualizar";
+                viewBtn.addEventListener('click', () => {
+                    state.generatedPersona = persona;
+                    switchTab('mapa');
+                });
+                card.appendChild(viewBtn);
+                grid.appendChild(card);
+            });
+        }
+
+        function deletePersona(id) {
+            state.savedPersonas = state.savedPersonas.filter(p => p.id !== id);
+            localStorage.setItem('scientific_buyer_personas', JSON.stringify(state.savedPersonas));
+            updateSavedCount();
+            renderBiblioteca();
+            showToast("Perfil eliminado.");
+        }
+
+        // --- RENDER SIMULADOR GAMIFICADO ---
+        function renderSimulador() {
+            const container = document.getElementById('simulator-game');
+            if (state.completed) {
+                // Pantalla final
+                let feedbackText = "⚠️ ¡Peligro de Falsos Positivos! Tiendes a vender la idea en vez de investigar hechos pasados del cliente.";
+                if (state.score === 100) {
+                    feedbackText = "🏆 ¡Investigador UX Experto! Sabes hacer preguntas empíricas y evitas los sesgos de amabilidad de los clientes.";
+                } else if (state.score >= 60) {
+                    feedbackText = "👍 ¡Buen camino! Sabes cómo anclar varias preguntas, pero aún caes en la tentación de preguntar sobre el futuro.";
+                }
+
+                container.innerHTML = `
+                    <div class="text-center space-y-6">
+                        <h4 class="text-lg sm:text-xl font-bold">Simulación Completada</h4>
+                        <p class="text-xs sm:text-sm text-slate-400">Puntaje total obtenido en la entrevista: <span class="font-black text-teal-400">${state.score}%</span></p>
+                        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl max-w-sm mx-auto text-xs text-slate-300 font-semibold">${feedbackText}</div>
+                        <button onclick="restartSimulator()" class="bg-slate-900 border border-slate-800 text-slate-300 font-bold px-6 py-3 rounded-xl text-xs mx-auto block">Reiniciar Simulador</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = momTestQuestions[state.currentQuestionIndex];
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex justify-between text-xs text-slate-400 font-bold border-b border-slate-800 pb-2">
+                        <span>Pregunta ${state.currentQuestionIndex + 1} de ${momTestQuestions.length}</span>
+                        <span class="text-teal-400">Puntuación: ${state.score}%</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium bg-slate-900 p-4 rounded-xl border border-slate-800">${q.context}</p>
+                    <div class="space-y-2.5">
+                        <button onclick="answerSimulator(0)" class="w-full text-left p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs sm:text-sm font-bold text-slate-200 transition">${q.options[0].text}</button>
+                        <button onclick="answerSimulator(1)" class="w-full text-left p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 text-xs sm:text-sm font-bold text-slate-200 transition">${q.options[1].text}</button>
+                    </div>
+                </div>
+            `;
+
+            if (state.showFeedback) {
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = "p-4 rounded-xl border text-xs sm:text-sm leading-relaxed mt-4 " + (state.feedbackType === 'buena' ? 'bg-emerald-950/25 border-emerald-500/20 text-emerald-300' : 'bg-rose-950/25 border-rose-500/20 text-rose-300');
+                feedbackDiv.innerHTML = `
+                    <p class="font-black">${state.feedbackType === 'buena' ? '✓ Respuesta Correcta' : '⚠️ Alerta de Sesgo'}</p>
+                    <p class="mt-1">${state.feedbackText}</p>
+                `;
+                container.appendChild(feedbackDiv);
+
+                // Botón Siguiente
+                const nextBtn = document.createElement('button');
+                nextBtn.className = "mt-4 bg-teal-500 text-slate-950 font-black px-4 py-2 rounded-lg text-xs hover:bg-teal-400 block ml-auto transition";
+                nextBtn.innerText = "Continuar";
+                nextBtn.addEventListener('click', () => {
+                    state.showFeedback = false;
+                    state.currentQuestionIndex += 1;
+                    if (state.currentQuestionIndex >= momTestQuestions.length) {
+                        state.completed = true;
+                    }
+                    renderSimulador();
+                });
+                container.appendChild(nextBtn);
+            }
+        }
+
+        function answerSimulator(optionIdx) {
+            if (state.showFeedback) return; // evitar doble clic
+            const q = momTestQuestions[state.currentQuestionIndex];
+            const opt = q.options[optionIdx];
+
+            state.score += opt.score;
+            state.showFeedback = true;
+            state.feedbackType = opt.type;
+            state.feedbackText = opt.feedback + "\n\nCarlos dice: \"" + opt.response + "\"";
+            renderSimulador();
+        }
+
+        function restartSimulator() {
+            state.currentQuestionIndex = 0;
+            state.score = 0;
+            state.showFeedback = false;
+            state.completed = false;
+            renderSimulador();
+        }
     </script>
 </body>
 </html>
